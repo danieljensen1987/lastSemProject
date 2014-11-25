@@ -3,9 +3,6 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 
 
-
-
-
 /* GET home page. */
 router.get('/', function(req, res) {
   res.redirect("app/index.html")
