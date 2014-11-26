@@ -50,12 +50,42 @@ process.on('SIGINT', function() {
 
 /** User SCHEMA **/
 /** Replace this Schema with your own(s) **/
-var usersSchema = new mongoose.Schema({
+/*var usersSchema = new mongoose.Schema({
   userName : String,
   email: {type: String, unique: true},
   pw: String,
   created: { type: Date, default: new Date() }
 });
+ mongoose.model( 'User', usersSchema,"testusers" );
+*/
 
-mongoose.model( 'User', usersSchema,"testusers" );
+var usersSchema = new mongoose.Schema({
+  email: {type: String, unique: true},
+  name: String,
+  semester: [String]
+});
 
+mongoose.model('User', usersSchema, "users");
+
+var SPTSchema = new mongoose.schema({
+  semester:[{semesterName: {type: String, unique: true},
+    sSDate: date(),
+    eSDate: date(),
+    periode: [String],
+    students: [String]}],
+  periode:[{periodeName: String,
+    sPDate: date(),
+    ePDate: date(),
+    task: [String]}],
+  task:[{taskName: String,
+    description: String,
+    maxpoints: Number}]
+});
+
+mongoose.model('SPT', SPTSchema, "SPT");
+
+var pointsSchema = new mongoose.schema({
+    antal: number
+});
+
+mongoose.model('Points', pointsSchema, "points");
