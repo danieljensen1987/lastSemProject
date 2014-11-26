@@ -65,7 +65,7 @@ var usersSchema = new mongoose.Schema({
   semester: [String]
 });
 
-mongoose.model('User', usersSchema, "users");
+exports.UserModel = mongoose.model('User', usersSchema, "users");
 
 var SPTSchema = new mongoose.schema({
   semester:[{semesterName: {type: String, unique: true},
@@ -82,10 +82,10 @@ var SPTSchema = new mongoose.schema({
     maxpoints: Number}]
 });
 
-mongoose.model('SPT', SPTSchema, "SPT");
+exports.SPTModel = mongoose.model('SPT', SPTSchema, "SPT");
 
 var pointsSchema = new mongoose.schema({
     antal: number
 });
 
-mongoose.model('Points', pointsSchema, "points");
+exports.PointModel = mongoose.model('Points', pointsSchema, "points");
