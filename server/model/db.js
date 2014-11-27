@@ -68,25 +68,25 @@ var usersSchema = new mongoose.Schema({
 
 exports.UserModel = mongoose.model('User', usersSchema, "users");
 
-var SPTSchema = new mongoose.schema({
-  semester:[{semesterName: {type: String, unique: true},
-    sSDate: date(),
-    eSDate: date(),
-    periode: [String],
-    students: [String]}],
-  periode:[{periodeName: String,
-    sPDate: date(),
-    ePDate: date(),
-    task: [String]}],
-  task:[{taskName: String,
-    description: String,
-    maxpoints: Number}]
-});
+//var SPTSchema = new mongoose.schema({
+//  semester:[{semesterName: {type: String, unique: true},
+//    sSDate: date(),
+//    eSDate: date(),
+//    periode: [String],
+//    students: [String]}],
+//  periode:[{periodeName: String,
+//    sPDate: date(),
+//    ePDate: date(),
+//    task: [String]}],
+//  task:[{taskName: String,
+//    description: String,
+//    maxpoints: Number}]
+//});
+//
+//exports.SPTModel = mongoose.model('SPT', SPTSchema, "SPT");
 
-exports.SPTModel = mongoose.model('SPT', SPTSchema, "SPT");
+//var pointsSchema = new mongoose.schema({
+//    antal: number
+//});
 
-var pointsSchema = new mongoose.schema({
-    antal: number
-});
-
-exports.PointModel = mongoose.model('Points', pointsSchema, "points");
+//exports.PointModel = mongoose.model('Points', pointsSchema, "points");
