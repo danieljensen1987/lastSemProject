@@ -60,10 +60,10 @@ process.on('SIGINT', function() {
 */
 
 var usersSchema = new mongoose.Schema({
-  email: {type: String, unique: true},
-  Fname: String,
-  Lname: String,
-  semester: [String]
+  username: {type: String, unique: true},
+  fullname: {fname: String, lname: String},
+  class: String,
+  semester: String
 });
 
 exports.UserModel = mongoose.model('User', usersSchema, "users");

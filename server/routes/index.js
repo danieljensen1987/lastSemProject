@@ -25,19 +25,17 @@ router.post('/authenticate', function (req, res) {
         switch (body){
             case 'student':
                 var profile = {
-                    username: 'Some student',
-                    role: "student",
-                    id: 1000
+                    username: req.body.username,
+                    role: "student"
                 };
-                var token = jwt.sign(profile, require("../security/secrets").secretTokenUser, { expiresInMinutes: 60*5 });
+                var token = jwt.sign(profile, require("../security/secrets").secretTokenStudent, { expiresInMinutes: 60*5 });
                 res.json({ token: token });
                 break;
 
             case 'teacher':
                 var profile = {
-                    username: 'A teacher',
-                    role: "teacher",
-                    id: 123423
+                    username: req.body.username,
+                    role: "teacher"
                 };
                 var token = jwt.sign(profile, require("../security/secrets").secretTokenTeacher, { expiresInMinutes: 60*5 });
                 res.json({ token: token });
@@ -45,9 +43,8 @@ router.post('/authenticate', function (req, res) {
 
             case 'admin':
                 var profile = {
-                    username: 'The Admin',
-                    role: "admin",
-                    id: 8453
+                    username: req.body.username,
+                    role: "admin"
                 };
                 var token = jwt.sign(profile, require("../security/secrets").secretTokenAdmin, { expiresInMinutes: 60*5 });
                 res.json({ token: token });
