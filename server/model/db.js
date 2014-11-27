@@ -61,7 +61,8 @@ process.on('SIGINT', function() {
 
 var usersSchema = new mongoose.Schema({
   email: {type: String, unique: true},
-  name: String,
+  Fname: String,
+  Lname: String,
   semester: [String]
 });
 
