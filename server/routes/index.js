@@ -1,52 +1,70 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
+var http = require('http');
+var request = require('request');
 
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.redirect("app/index.html")
+    res.redirect("app/index.html")
 });
 
 
 router.post('/authenticate', function (req, res) {
-  //TODO: Go and get UserName Password from "somewhere"
-  //if is invalid, return 401
-   if (req.body.username === 'student' && req.body.password === 'test') {
-    var profile = {
-      username: 'Bo the Student',
-      role: "user",
-      id: 1000
+    var options = {
+        uri: 'http://localhost:9191/login',
+        method: 'POST',
+        json: {
+            "username": req.body.username,
+            "password": req.body.password
+        }
     };
-    // We are sending the profile inside the token
-    var token = jwt.sign(profile, require("../security/secrets").secretTokenUser, { expiresInMinutes: 60*5 });
-    res.json({ token: token });
-    return;
-  }
 
-  if (req.body.username === 'teacher' && req.body.password === 'test') {
-    var profile = {
-      username: 'Peter the Teacher',
-      role: "admin",
-      id: 123423
-    };
-    // We are sending the profile inside the token
-    var token = jwt.sign(profile, require("../security/secrets").secretTokenAdmin, { expiresInMinutes: 60*5 });
-    res.json({ token: token });
-    return;
-  }
+    request(options, function (error, response, body) {
+        switch (body){
+            case 'student':
+                var profile = {
+                    username: 'Some student',
+                    role: "student",
+                    id: 1000
+                };
+                var token = jwt.sign(profile, require("../security/secrets").secretTokenUser, { expiresInMinutes: 60*5 });
+                res.json({ token: token });
+                break;
 
-  else{
-    res.status(401).send('Wrong user or password');
-    return;
-  }
+            case 'teacher':
+                var profile = {
+                    username: 'A teacher',
+                    role: "teacher",
+                    id: 123423
+                };
+                var token = jwt.sign(profile, require("../security/secrets").secretTokenTeacher, { expiresInMinutes: 60*5 });
+                res.json({ token: token });
+                break;
+
+            case 'admin':
+                var profile = {
+                    username: 'The Admin',
+                    role: "admin",
+                    id: 8453
+                };
+                var token = jwt.sign(profile, require("../security/secrets").secretTokenAdmin, { expiresInMinutes: 60*5 });
+                res.json({ token: token });
+                break;
+
+            case 'Fail':
+                res.status(401).send('Wrong user or password');
+                break;
+        }
+    });
 });
 
 
 //Get Partials made as Views
 router.get('/partials/:partialName', function(req, res) {
-  var name = req.params.partialName;
-  res.render('partials/' + name);
+    var name = req.params.partialName;
+    res.render('partials/' + name);
 });
 
 module.exports = router;
