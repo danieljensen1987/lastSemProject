@@ -63,7 +63,8 @@ var usersSchema = new mongoose.Schema({
   username: {type: String, unique: true},
   fullname: {fname: String, lname: String},
   class: String,
-  semester: String
+  semester: String,
+  points: Number
 });
 
 exports.UserModel = mongoose.model('User', usersSchema, "users");
