@@ -35,9 +35,9 @@ router.post('/authenticate', function (req, res) {
             case 'teacher':
                 var profile = {
                     username: req.body.username,
-                    role: "teacher"
+                    role: "admin"
                 };
-                var token = jwt.sign(profile, require("../security/secrets").secretTokenTeacher, { expiresInMinutes: 60*5 });
+                var token = jwt.sign(profile, require("../security/secrets").secretTokenAdmin, { expiresInMinutes: 60*5 });
                 res.json({ token: token });
                 break;
 

@@ -46,28 +46,76 @@ process.on('SIGINT', function() {
     process.exit(0);
   });
 });
-
-
-/** User SCHEMA **/
-/** Replace this Schema with your own(s) **/
-/*var usersSchema = new mongoose.Schema({
-  userName : String,
-  email: {type: String, unique: true},
-  pw: String,
-  created: { type: Date, default: new Date() }
-});
- mongoose.model( 'User', usersSchema,"testusers" );
-*/
-
-var usersSchema = new mongoose.Schema({
-  username: {type: String, unique: true},
-  fullname: {fname: String, lname: String},
-  class: String,
-  semester: String,
-  points: Number
-});
-
-exports.UserModel = mongoose.model('User', usersSchema, "users");
+//
+//
+//var SemesterSchema = mongoose.Schema({
+//  _id: Number,
+//  name: String,
+//  description: String
+//});
+//
+//exports.SemesterModel = mongoose.model('semesters', SemesterSchema);
+//
+//var ClasseSchema = mongoose.Schema({
+//  _id: Number,
+//  className: String,
+//  periods: [{ type: Number, ref: 'periods' }],
+//  users: [{ type: Number, ref: 'users' }],
+//  semester: { type: Number, ref: 'semesters' }
+//});
+//
+//exports.ClasseModel = mongoose.model('classes', ClasseSchema);
+//
+//var TaskSchema = mongoose.Schema({
+//  _id: Number,
+//  taskDetails: { type: Number, ref: 'taskDetails' },
+//  user: { type: Number, ref: 'users' },
+//  points: Number
+//});
+//
+//exports.TaskModel = mongoose.model('tasks', TaskSchema);
+//
+//var TaskDetailSchema = mongoose.Schema({
+//  _id: Number,
+//  taskName: String,
+//  description: String
+//});
+//
+//exports.TaskDetailModel = mongoose.model('taskDetails', TaskDetailSchema);
+//
+//var UserDetailSchema = mongoose.Schema({
+//  _id: Number,
+//  fName: String,
+//  lName: String,
+//  address: String,
+//  city: String,
+//  zip: String,
+//  email: String,
+//  phone: String
+//});
+//
+//exports.UserDetailModel = mongoose.model('userDetails', UserDetailSchema);
+//
+//var UserSchema = mongoose.Schema({
+//  _id: Number,
+//  userName: String,
+//  roleName: String,
+//  userDetails: {type: String, ref: 'userDetails'}
+//});
+//
+//exports.UserModel = mongoose.model('users', UserSchema);
+//
+//var PeriodSchema = mongoose.Schema({
+//  _id: Number,
+//  periodName: String,
+//  sDate: String,
+//  eDate: String,
+//  description: String,
+//  tasks: [{ type: Number, ref: 'tasks' }],
+//  users: [{ type: Number, ref: 'users' }]
+//});
+//
+//exports.PeriodModel = mongoose.model('periods', PeriodSchema);
 
 //var SPTSchema = new mongoose.schema({
 //  semester:[{semesterName: {type: String, unique: true},

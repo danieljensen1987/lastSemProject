@@ -1,11 +1,60 @@
 <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
-<p>This is the partial for view 2.</p>
-<p style="color: darkgreen">Partial (view2.html) is located in the folder for this view (app/view2)</p>
 <br/>
-<p style="color: #105cb6">
+<div class="col-lg-12">
+  <!--user info-->
+  <div class="col-lg-6">
+    <label style="width: 10em">Username:</label>
+    <label>{{user[0]._id}}</label><br/>
 
-  {{info.msg}}
-</p>
+    <label style="width: 10em">Name:</label>
+    <label>{{user[0].fName}} {{user[0].lName}}</label><br/>
 
+    <label style="width: 10em">Address:</label>
+    <label>{{user[0].address}}, {{user[0].zip}} {{user[0].city}}</label><br/>
 
+    <label style="width: 10em">Phone:</label>
+    <label>{{user[0].phone}}</label><br/>
 
+    <label style="width: 10em">Email:</label>
+    <label>{{user[0].email}}</label><br/>
+  </div>
+  <!--class info-->
+  <div class="col-lg-6">
+    <label style="width: 10em">Daily Points:</label>
+    <label>{{user[0].dailyPoints}}</label><br/>
+
+    <label style="width: 10em">Tasks Points:</label>
+    <label>{{getTotalPoints(tasks)}}</label><br/>
+
+    <label style="width: 10em">Class:</label>
+    <label>{{class[0]._id}}</label><br/>
+
+    <label style="width: 10em">Semester:</label>
+    <label>{{class[0].semester._id}}</label><br/>
+
+    <label style="width: 10em">Start Date:</label>
+    <label>{{class[0].semester.sDate}}</label><br/>
+
+    <label style="width: 10em">End Date:</label>
+    <label>{{class[0].semester.eDate}}</label><br/>
+  </div>
+  <!--tasks info-->
+  <div class="col-lg-6"><h4>Period</h4></div>
+  <div class="col-lg-3"><h4>Task</h4></div>
+  <div class="col-lg-3"><h4>Points</h4></div>
+  <legend></legend>
+  <div ng-repeat="period in periods">
+    <div class="col-lg-6">
+      {{period._id}} ({{period.description}})
+    </div>
+    <div class="col-lg-3" ng-repeat="task in tasks | filter:period._id">
+      <div>{{task.taskDetails.description}}</div>
+      <br/>
+    </div>
+    <div class="col-lg-3" ng-repeat="task in tasks | filter:period._id">
+      <div>{{task.points}}</div>
+      <br/>
+    </div>
+    <legend></legend>
+  </div>
+</div>

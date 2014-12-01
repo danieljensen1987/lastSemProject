@@ -1,0 +1,2 @@
+_id,description,classes,sDate,eDate,maxPoints,requiredPoints
+[["p1-sem3","Network, Socket programming",["datA","datB","cos"],"2014-01-07","2014-30-07",30,20],["p2-sem3","JavaScript, RESTfull, JPA",["datA","datB","cos"],"2014-01-08","2014-30-08",30,20],["p3-sem3","Node.js",["datA","datB","cos"],"2014-01-09","2014-30-09",30,20],["p4-sem3","Angular.js",["datA","datB","cos"],"2014-01-10","2014-10-07",30,20],["p5-sem3","Exam",["datA","datB","cos"],"2014-01-11","2014-30-12",30,20]]

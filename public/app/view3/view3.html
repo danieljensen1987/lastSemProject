@@ -5,8 +5,9 @@
   <table class="table">
     <thead>
     <tr>
-      <td><a href="" ng-click="predicate = 'fullname.lname'; reverse=!reverse">Name</a>
-        <input type="search" ng-model="search.fullname" placeholder="Search name">
+      <td><a href="" ng-click="predicate = '_id'; reverse=!reverse">ID</a>
+      <td><a href="" ng-click="predicate = 'fName'; reverse=!reverse">Name</a>
+        <input type="search" ng-model="search.fName" placeholder="Search name">
       </td>
       <td><a href="" ng-click="predicate = 'semester'; reverse=!reverse">Semester</a></td>
       <td><a href="" ng-click="predicate = 'class'; reverse=!reverse">Class</a>
@@ -20,16 +21,18 @@
     </thead>
     <tbody>
     <tr ng-repeat="user in users | orderBy:predicate:reverse | filter:filter | filter:search">
-      <td>{{user.fullname.lname}}, {{user.fullname.fname}}</td>
+      <td>{{user._id}}</td>
+      <td>{{user.fName}} {{user.lName}}</td>
       <td>{{user.semester}}</td>
       <td>{{user.class}}</td>
-      <td>{{user.points}}</td>
+      <td ng-class="">{{getSum(user.tasks)}}</td>
     </tr>
     </tbody>
   </table>
 </div>
+<div class="col-lg-12">
+  <ul>
+    <li ng-repeat="user in users"> {{user}}</li>
+  </ul>
 
-<ul>
-  <li ng-repeat="user in users"> {{user}}</li>
-</ul>
-</p>
+</div>
