@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 var model = require('../model/model');
 
 router.get('/students', function(req, res) {
@@ -334,9 +335,22 @@ router.get('/taskDetail/:detailid', function(req, res) {
         });
 });
 
-router.get('/test', function(req, res) {
-    res.header("Content-type","application/json");
-    res.end('{"msg" : "Test Message, You are logged on as a User since you could fetch this data"}');
+router.post('/change', function(req, res) {
+    var options = {
+        uri: 'http://localhost:9191/user',
+        method: 'PUT',
+        json: {
+            "userName": req.body.userName,
+            "newPassword": req.body.newPassword,
+            "currentPassword": req.body.currentPassword
+        }
+    };
+    request(options, function (error, response, body) {
+        if (error){
+            res.status(401).send('Wrong user or password');
+        }
+        res.send(body);
+    });
 });
 
 module.exports = router;

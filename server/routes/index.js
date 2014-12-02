@@ -22,6 +22,7 @@ router.post('/authenticate', function (req, res) {
     };
 
     request(options, function (error, response, body) {
+        console.log(body);
         switch (body){
             case 'student':
                 var profile = {
@@ -50,8 +51,8 @@ router.post('/authenticate', function (req, res) {
                 res.json({ token: token });
                 break;
 
-            case 'Fail':
-                res.status(401).send('Wrong user or password');
+            default:
+                res.status(401).send('Invalid Username or Password');
                 break;
         }
     });
