@@ -58,11 +58,4 @@ router.post('/authenticate', function (req, res) {
     });
 });
 
-
-//Get Partials made as Views
-router.get('/partials/:partialName', function(req, res) {
-    var name = req.params.partialName;
-    res.render('partials/' + name);
-});
-
 module.exports = router;

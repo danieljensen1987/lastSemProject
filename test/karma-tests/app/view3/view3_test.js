@@ -1,4 +1,4 @@
-describe('myAppRename.view3 View3Ctrl', function() {
+describe('myAppRename.view-teacher View3Ctrl', function() {
 
   var scope, httpBackendMock, ctrl;
   var users = [

@@ -8,13 +8,13 @@ angular.module('myAppRename', [
   'myAppRename.services',
   'myAppRename.factories',
   'myAppRename.filters',
-  'myAppRename.view1',
-  'myAppRename.view2',
-  'myAppRename.view3',
-  'myAppRename.view4'
+  'myAppRename.viewAll',
+  'myAppRename.viewStudent',
+  'myAppRename.viewTeacher',
+  'myAppRename.viewAdmin'
 ]).
 config(['$routeProvider', function($routeProvider) {
-    $routeProvider.otherwise({redirectTo: '/view1'});
+    $routeProvider.otherwise({redirectTo: '/view-all'});
 }])
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');

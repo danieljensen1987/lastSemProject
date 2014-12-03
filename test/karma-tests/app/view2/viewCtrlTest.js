@@ -1,4 +1,4 @@
-describe('myAppRename.view2 view2Ctrl', function() {
+describe('myAppRename.view-student view2Ctrl', function() {
 
   var scope, httpBackendMock, ctrl;
   var testResponse = {msg : "Test Message"};

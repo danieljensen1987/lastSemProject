@@ -54,7 +54,7 @@ angular.module('myAppRename.controllers', []).
       $scope.isAdmin =false;
       $scope.isUser = false;
       delete $window.sessionStorage.token;
-      $location.path("/view1");
+      $location.path("/view-all");
     }
   })
 

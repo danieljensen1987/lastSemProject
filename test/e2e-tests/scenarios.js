@@ -6,19 +6,19 @@
 //
 //  browser.get('/');
 //
-//  it('should automatically redirect to /view1 when location hash/fragment is empty', function() {
-//    expect(browser.getLocationAbsUrl()).toMatch("/view1");
+//  it('should automatically redirect to /view-all when location hash/fragment is empty', function() {
+//    expect(browser.getLocationAbsUrl()).toMatch("/view-all");
 //  });
 //
 //
-//  describe('view1', function() {
+//  describe('view-all', function() {
 //
 //    beforeEach(function() {
-//      browser.get('#/view1');
+//      browser.get('#/view-all');
 //    });
 //
 //
-//    it('should render view1 when user navigates to /view1', function() {
+//    it('should render view-all when user navigates to /view-all', function() {
 //      expect(element.all(by.css('[ng-view] p')).first().getText()).
 //        toMatch(/partial for view 1/);
 //    });
@@ -26,14 +26,14 @@
 //  });
 //
 //
-//  describe('view2', function() {
+//  describe('view-student', function() {
 //
 //    beforeEach(function() {
-//      browser.get('#/view2');
+//      browser.get('#/view-student');
 //    });
 //
 //
-//    it('should render view2 when user navigates to /view2', function() {
+//    it('should render view-student when user navigates to /view-student', function() {
 //      expect(element.all(by.css('[ng-view] p')).first().getText()).
 //        toMatch(/partial for view 2/);
 //    });

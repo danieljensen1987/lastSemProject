@@ -1,20 +1,14 @@
 'use strict';
 
-angular.module('myAppRename.view2', ['ngRoute'])
+angular.module('myAppRename.viewStudent', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/view2', {
-            templateUrl: 'app/view2/view2.html',
+        $routeProvider.when('/view-student', {
+            templateUrl: 'app/view-student/student-profile.html',
             controller: 'View2Ctrl'
         });
     }])
     .controller('View2Ctrl', ['$scope', '$http', function ($scope, $http) {
-        //$scope.pws = {
-        //    newPw: '',
-        //    repeatPw: ''
-        //};
-
-
         var studentId = $scope.username;
         $http({
             method: 'GET',
@@ -38,7 +32,7 @@ angular.module('myAppRename.view2', ['ngRoute'])
         })
             .success(function (data, status, headers, config) {
                 $scope.class = data;
-                getClass(data);
+                getPeriods(data);
                 $scope.error = null;
             }).
             error(function (data, status, headers, config) {
@@ -64,7 +58,7 @@ angular.module('myAppRename.view2', ['ngRoute'])
                 $scope.error = data;
             });
 
-        var getClass = function (text) {
+        var getPeriods = function (text) {
             var classId = text[0]['_id'];
             $http({
                 method: 'GET',

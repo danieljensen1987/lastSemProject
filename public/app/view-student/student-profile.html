@@ -61,13 +61,12 @@
 
         <div class="col-lg-12" style="padding: 0px">
           <div class="col-lg-6" style="padding: 0px">
-            <input type="password" placeholder="New Password" class="form-control" ng-model="pass.newPassword"
-                   required="false" match="pass.currentPassword" name="passwordNew">
+            <input type="password" placeholder="New Password" class="form-control" ng-model="pass.newPassword">
           </div>
           <div class="col-lg-6" style="height: 2.0em">
             <div class="text-danger form-group-sm" ng-hide="form.passwordNew.$error.mismatch"></div>
             <div class="text-danger " ng-show="form.passwordNew.$error.mismatch">
-              <p style="padding-top: 0.3em">Doesn't match</p>
+              <p style="padding-top: 0.3em">Password does not match</p>
             </div>
           </div>
         </div>

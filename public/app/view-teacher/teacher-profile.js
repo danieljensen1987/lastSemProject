@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('myAppRename.view3', ['ngRoute'])
+angular.module('myAppRename.viewTeacher', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/view3', {
-            templateUrl: 'app/view3/view3.html',
+        $routeProvider.when('/view-teacher', {
+            templateUrl: 'app/view-teacher/teacher-profile.html',
             controller: 'View3Ctrl'
         });
     }])
@@ -26,6 +26,7 @@ angular.module('myAppRename.view3', ['ngRoute'])
                 }
                 $scope.error = data;
             });
+
         $scope.getClasses =  function () {
             var output = [];
 
