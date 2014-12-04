@@ -1,0 +1,46 @@
+<div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
+
+<br/>
+<div class="col-lg-12">
+  <input class="col-lg-3" type="search" ng-model="search.$" placeholder="Search username or name">
+</div>
+<br/><br/>
+
+<div class="col-lg-12" ng-repeat="class in classes">
+  <div ng-click="toggle = !toggle">
+    <label class="text-primary">{{class.semester}}. semester - {{class._id}}</label>
+  </div>
+  <div class="col-lg-12" style="padding: 0em" ng-hide="toggle">
+
+    <table class="table">
+      <tr>
+        <th><a href="" ng-click="predicate = '_id'; reverse=!reverse" style="text-decoration: none">Username</a></th>
+        <th><a href="" ng-click="predicate = 'fName'; reverse=!reverse" style="text-decoration: none">Name</a>
+
+        </th>
+        <th><a href="" ng-click="predicate = 'dailyPoints'; reverse=!reverse" style="text-decoration: none">Daily Points</a></th>
+        <th><a href="" style="text-decoration: none">Add / Sub</a></th>
+        <th><a href="" style="text-decoration: none">Remove Student</a></th>
+      </tr>
+
+      <tr ng-repeat="student in class.students | orderBy:predicate:reverse | filter:filter | filter:search">
+        <td class="col-lg-3">{{student._id}}</td>
+        <td class="col-lg-3">{{student.fName}} {{student.lName}}</td>
+        <td >{{student.dailyPoints}}</td>
+        <td>
+          <button class="btn btn-success btn-sm" ng-click="updateDailyPoints(student,'plus')">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+          <button class="btn btn-primary btn-sm" ng-click="updateDailyPoints(student,'minus')">
+            <span class="glyphicon glyphicon-minus"></span>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" ng-click="removeStudentFromClass(student._id)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

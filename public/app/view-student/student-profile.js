@@ -12,13 +12,13 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
         var studentId = $scope.username;
         $http({
             method: 'GET',
-            url: 'userApi/students/'+studentId
+            url: 'userApi/getMyProfile/'+studentId
         })
-            .success(function (data, status, headers, config) {
+            .success(function (data) {
                 $scope.user = data;
                 $scope.error = null;
             }).
-            error(function (data, status, headers, config) {
+            error(function (data, status) {
                 if (status == 401) {
                     $scope.error = "You are not authenticated to request these data";
                     return;
@@ -28,29 +28,30 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
 
         $http({
             method: 'GET',
-            url: 'userApi/classesByUserId/'+studentId
+            url: 'userApi/getMyClass/'+studentId
         })
-            .success(function (data, status, headers, config) {
+            .success(function (data) {
                 $scope.class = data;
                 getPeriods(data);
                 $scope.error = null;
             }).
-            error(function (data, status, headers, config) {
+            error(function (data, status) {
                 if (status == 401) {
                     $scope.error = "You are not authenticated to request these data";
                     return;
                 }
                 $scope.error = data;
             });
+
         $http({
             method: 'GET',
-            url: 'userApi/tasksByUserId/'+studentId
+            url: 'userApi/getMyTasks/'+studentId
         })
-            .success(function (data, status, headers, config) {
+            .success(function (data) {
                 $scope.tasks = data;
                 $scope.error = null;
             }).
-            error(function (data, status, headers, config) {
+            error(function (data, status) {
                 if (status == 401) {
                     $scope.error = "You are not authenticated to request these data";
                     return;
@@ -62,20 +63,20 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
             var classId = text[0]['_id'];
             $http({
                 method: 'GET',
-                url: 'userApi/periodsByClassId/' + classId
+                url: 'userApi/getMyPeriods/' + classId
             })
-                .success(function (data, status, headers, config) {
+                .success(function (data) {
                     $scope.periods = data;
                     $scope.error = null;
                 }).
-                error(function (data, status, headers, config) {
+                error(function (data, status) {
                     if (status == 401) {
                         $scope.error = "You are not authenticated to request these data";
                         return;
                     }
                     $scope.error = data;
                 });
-        }
+        };
 
         $scope.getTotalPoints = function (tasks) {
             var total = 0;
@@ -83,7 +84,7 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
                 total += tasks[i].points;
             }
             return total;
-        }
+        };
 
         $scope.toggle = true;
 
@@ -91,19 +92,19 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
             var userName = $scope.username;
             var currentPassword =  pass['currentPassword'];
             var newPassword = pass['newPassword'];
-            var confirmPassword = pass['confirmPassword']
+            var confirmPassword = pass['confirmPassword'];
 
             var json = {
                 "userName": userName,
                 "currentPassword": currentPassword,
-                "newPassword": newPassword}
+                "newPassword": newPassword};
             $http
-                .post('userApi/change', json)
-                .success(function (data, status, headers, config) {
-                    $scope.pwMesage = data;
+                .post('userApi/changePassword', json)
+                .success(function () {
+                    $scope.pwMesage = 'Succes!';
                     $scope.error = null;
                 }).
-                error(function (data, status, headers, config) {
+                error(function (data, status) {
                     if (status == 401) {
                         $scope.error = "You are not authenticated to request these data";
                         return;

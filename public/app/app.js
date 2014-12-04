@@ -10,7 +10,6 @@ angular.module('myAppRename', [
   'myAppRename.filters',
   'myAppRename.viewAll',
   'myAppRename.viewStudent',
-  'myAppRename.viewTeacher',
   'myAppRename.viewStudypoints'
 ]).
 config(['$routeProvider', function($routeProvider) {

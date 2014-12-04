@@ -3,8 +3,8 @@
 angular.module('myAppRename.viewStudypoints', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/view-studypoints', {
-            templateUrl: 'app/view-studypoints/studypoints.html',
+        $routeProvider.when('/view-teacher', {
+            templateUrl: 'app/view-teacher/teacher-classes.html',
             controller: 'View4Ctrl'
         });
     }])
@@ -13,13 +13,13 @@ angular.module('myAppRename.viewStudypoints', ['ngRoute'])
         var teacherId = $scope.username;
         $http({
             method: 'GET',
-            url: 'adminApi/classesByTeacherId/' + teacherId
+            url: 'adminApi/getMyClasses/' + teacherId
         })
-            .success(function (data, status, headers, config) {
+            .success(function (data) {
                 $scope.classes = data;
                 $scope.error = null;
             }).
-            error(function (data, status, headers, config) {
+            error(function (data, status) {
                 if(status == 401){
                     $scope.error ="You are not authenticated to request these data";
                     return;
@@ -39,11 +39,11 @@ angular.module('myAppRename.viewStudypoints', ['ngRoute'])
             var json = {
                 "_id":student._id,
                 "dailyPoints":newDayliPoints
-            }
+            };
 
             $http
-                .post('adminApi/students', json)
-                .success(function (data, status, headers, config) {
+                .post('adminApi/updateDailyPoints', json)
+                .success(function () {
                     for (var i = 0; i < $scope.classes.length; i++){
                         var students = $scope.classes[i].students;
                         for (var j = 0; j < students.length; j++){
@@ -59,7 +59,32 @@ angular.module('myAppRename.viewStudypoints', ['ngRoute'])
                     }
                     $scope.error = null;
                 }).
-                error(function (data, status, headers, config) {
+                error(function (data, status) {
+                    if (status == 401) {
+                        $scope.error = "You are not authenticated to request these data";
+                        return;
+                    }
+                    $scope.error = data;
+                });
+        };
+
+        $scope.removeStudentFromClass = function (studentId){
+            $http
+                .get('adminApi/removeStudentFromClass/' + studentId)
+                .success(function () {
+                    for (var i = 0; i < $scope.classes.length; i++){
+                        var students = $scope.classes[i].students;
+                        for(var j = 0; j < students.length; j++){
+                            if(students[j]._id === studentId){
+                                students.splice(j,1);
+                                break;
+                            }
+                        }
+                    }
+                    $scope.error = null;
+                }).
+                error(function (data, status) {
+                    console.log('here?' + data);
                     if (status == 401) {
                         $scope.error = "You are not authenticated to request these data";
                         return;

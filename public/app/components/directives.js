@@ -17,7 +17,6 @@ angular.module('myAppRename.directives', [])
       return {
         require: 'ngModel',
         link: function(scope, elem, attrs, ctrl) {
-          console.log(attrs);
           scope.$watch(function() {
             return $parse(attrs.match)(scope) === ctrl.$modelValue;
           }, function(currentValue) {
