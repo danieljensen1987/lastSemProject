@@ -2,8 +2,8 @@ var fs = require('fs'),
     async = require('async'),
     mongoose = require('mongoose'),
     model = require('./../model/model'),
-    //dbUrl = "mongodb://test:test@ds053380.mongolab.com:53380/studypoints";
-    dbUrl = "mongodb://localhost/studypoints";
+    dbUrl = "mongodb://test:test@ds053380.mongolab.com:53380/studypoints";
+    //dbUrl = "mongodb://localhost/studypoints";
 
 function readData(path) {
     var file = fs.readFileSync(path, 'utf8');

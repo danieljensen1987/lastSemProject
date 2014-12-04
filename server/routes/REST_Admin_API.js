@@ -39,6 +39,26 @@ router.get('/students/:userid', function(req, res) {
             res.end(JSON.stringify(user));
         });
 });
+router.post('/students/', function(req, res) {
+    var id = req.body._id;
+    var dailyPoints = req.body.dailyPoints;
+
+    if(typeof global.mongo_error !== "undefined"){
+        res.status(500);
+        res.end("Error: "+global.mongo_error+" To see a list of users here, make sure you have started the database and set up some test users (see model-->db.js for instructions)");
+        return;
+    }
+    model.StudentModel.findOneAndUpdate({_id: id},{$set:{dailyPoints:dailyPoints}},{new:true})
+        .exec(function (err, user) {
+            if (err) {
+                res.status(err.status || 400);
+                res.end(JSON.stringify({error: err.toString()}));
+                return;
+            }
+            res.header("Content-type","application/json");
+            res.end(JSON.stringify(user));
+        });
+});
 
 router.get('/teachers', function(req, res) {
     if(typeof global.mongo_error !== "undefined"){
@@ -125,9 +145,8 @@ router.get('/classes', function(req, res) {
         res.end("Error: "+global.mongo_error+" To see a list of users here, make sure you have started the database and set up some test users (see model-->db.js for instructions)");
         return;
     }
-
-
     model.ClasseModel.find({})
+        .populate('students')
         .exec(function (err, classes) {
             if (err) {
                 res.status(err.status || 400);
@@ -156,6 +175,25 @@ router.get('/classesById/:classid', function(req, res) {
             }
             res.header("Content-type","application/json");
             res.end(JSON.stringify(classe));
+        });
+});
+router.get('/classesByTeacherId/:teacherid', function(req, res) {
+    var teacherId = req.params.teacherid;
+    if(typeof global.mongo_error !== "undefined"){
+        res.status(500);
+        res.end("Error: "+global.mongo_error+" To see a list of users here, make sure you have started the database and set up some test users (see model-->db.js for instructions)");
+        return;
+    }
+    model.ClasseModel.find({teachers:teacherId})
+        .populate('students')
+        .exec(function (err, classes) {
+            if (err) {
+                res.status(err.status || 400);
+                res.end(JSON.stringify({error: err.toString()}));
+                return;
+            }
+            res.header("Content-type","application/json");
+            res.end(JSON.stringify(classes));
         });
 });
 router.get('/classesByUserId/:userid', function(req, res) {

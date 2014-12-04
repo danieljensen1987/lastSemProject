@@ -22,7 +22,6 @@ router.post('/authenticate', function (req, res) {
     };
 
     request(options, function (error, response, body) {
-        console.log(body);
         switch (body){
             case 'student':
                 var profile = {

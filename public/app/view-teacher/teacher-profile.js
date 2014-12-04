@@ -13,10 +13,10 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
         $scope.predicate = "id";
         $http({
             method: 'GET',
-            url: 'adminApi/students'
+            url: 'adminApi/classes'
         })
             .success(function (data, status, headers, config) {
-                $scope.users = data;
+                $scope.classes = data;
                 $scope.error = null;
             }).
             error(function (data, status, headers, config) {

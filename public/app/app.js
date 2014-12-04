@@ -11,7 +11,7 @@ angular.module('myAppRename', [
   'myAppRename.viewAll',
   'myAppRename.viewStudent',
   'myAppRename.viewTeacher',
-  'myAppRename.viewAdmin'
+  'myAppRename.viewStudypoints'
 ]).
 config(['$routeProvider', function($routeProvider) {
     $routeProvider.otherwise({redirectTo: '/view-all'});
