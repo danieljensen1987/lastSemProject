@@ -4,15 +4,30 @@ var jwt = require('jsonwebtoken');
 var http = require('http');
 var request = require('request');
 var jpa = require('../model/jpaInterface');
+//var bcrypt = require('bcryptjs');
 
-
-/* GET home page. */
 router.get('/', function(req, res) {
     res.redirect("app/index.html")
 });
 
 
 router.post('/authenticate', function (req, res) {
+    // TODO implement this an make jpa return user instead of role
+    //var loadHash = "";
+    //bcrypt.genSalt(10, function(err, salt) {
+    //    bcrypt.hash(req.body.password, salt, function(err, hash) {
+    //        loadHash = hash;
+    //        console.log(loadHash);
+    //        test();
+    //    });
+    //});
+    //var test = function () {
+    //    bcrypt.compare(req.body.password, loadHash, function(err, res) {
+    //        console.log(loadHash);
+    //        console.log(res);
+    //    });
+    //};
+
     var json = {
         "username": req.body.username,
         "password": req.body.password
