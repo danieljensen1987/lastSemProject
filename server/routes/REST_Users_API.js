@@ -72,11 +72,9 @@ router.post('/changePassword', function(req, res) {
                     res.status(401).send('Invalid Username or Password');
                     return;
                 }
-                console.log('DATA:' + data.id + data.password + data.rolle);
+
                 bcrypt.compare(req.body.currentPassword, data.password, function(err, result) {
-                    console.log(result);
                     if (result){
-                        console.log('I AM LOGGED IN');
                         var json ={
                             "userName": req.body.userName,
                             "newPassword": newSaltedPass,

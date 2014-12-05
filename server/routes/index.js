@@ -28,10 +28,8 @@ router.post('/authenticate', function (req, res) {
                     res.status(401).send('Invalid Username or Password');
                     return;
                 }
-                console.log('DATA:' + data.id + data.password + data.rolle);
+
                 bcrypt.compare(req.body.password, data.password, function(err, result) {
-                    console.log("salted pass = " + saltedPass);
-                    console.log("passw from db = " + data.password);
                     if (result){
 
 
@@ -61,15 +59,8 @@ router.post('/authenticate', function (req, res) {
                     } else{
                         res.status(401).send('Invalid Username or Password');
                     }
-
-
                 });
             });
-
-
-
-            //console.log(saltedPass);
-            //test();
         });
     });
 });
