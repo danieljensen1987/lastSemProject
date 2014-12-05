@@ -4,6 +4,7 @@ var request = require('request');
 var model = require('../model/model');
 var jpa = require('../model/jpaInterface');
 var mongoInterface = require('../model/mongoInterface');
+var bcrypt = require('bcryptjs');
 
 
 router.get('/getMyProfile/:userid', function(req, res) {
@@ -48,20 +49,66 @@ router.get('/getMyTasks/:studentid', function(req, res) {
 });
 
 router.post('/changePassword', function(req, res) {
-    var json ={
-        "userName": req.body.userName,
-        "newPassword": req.body.newPassword,
-        "currentPassword": req.body.currentPassword
-    };
-    jpa.changePassword('/user', json, function (error, data) {
-        if(error){
-            console.log(error);
-            res.status(401).send('Wrong Password');
-        }
-        else{
-            res.send(data)
-        }
+    var newSaltedPass = "";
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.newPassword, salt, function(err, hash) {
+            newSaltedPass = hash;
+        });
     });
+
+    var saltedPass = "";
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(req.body.currentPassword, salt, function(err, hash) {
+            if(err)console.log("error: " +err);
+            saltedPass = hash;
+
+            var json = {
+                "username": req.body.userName,
+                "password": req.body.currentPassword
+            };
+
+            jpa.login('/login', json, function (error, data) {
+                if (error){
+                    res.status(401).send('Invalid Username or Password');
+                    return;
+                }
+                console.log('DATA:' + data.id + data.password + data.rolle);
+                bcrypt.compare(req.body.currentPassword, data.password, function(err, result) {
+                    console.log(result);
+                    if (result){
+                        console.log('I AM LOGGED IN');
+                        var json ={
+                            "userName": req.body.userName,
+                            "newPassword": newSaltedPass,
+                            "currentPassword": req.body.currentPassword
+                        };
+
+
+                        jpa.changePassword('/user', json, function (error, data) {
+                            if(error){
+                                console.log(error);
+                                res.status(401).send('Wrong Password');
+                            }
+                            else{
+                                res.send(data)
+                            }
+                        });
+                    } else{
+                        console.log(data);
+                        res.status(401).send('Invalid Username or Password');
+                    }
+
+
+                });
+            });
+
+
+
+            //console.log(saltedPass);
+            //test();
+        });
+    });
+
 });
 
 module.exports = router;
