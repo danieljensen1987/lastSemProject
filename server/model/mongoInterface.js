@@ -69,6 +69,62 @@ model.ClasseModel.findOneAndUpdate({students:studentId},{$pull:{students:student
     })
 }
 
+
+function addClass(classId, students, teachers, semester, callback){
+    model.ClasseModel.insert({class:classId, students:students, teachers:teachers, semester:semester})
+        .exec(function(err,classes){
+            if (err){
+                callback(err);
+            }
+            callback(null,classes)
+        });
+
+}
+function addPeriod(periodId, description, classe, sDate, eDate, maxPoints, requiredPoints, callback){
+    model.PeriodModel.insert({period:periodId, description:description, class:classe, sDate:sDate, eDate:eDate,
+    maxPoints:maxPoints, requiredPoints:requiredPoints})
+        .exec(function(err,periods){
+            if(err){
+                callback(err);
+            }
+            callback(null,periods)
+        });
+}
+function addTaskDetails(taskDetailsId, description, period, callback){
+    model.TaskDetailModel.insert({taskDetails:taskDetailsId, description:description, period:period})
+        .exec(function(err,taskDetails){
+            if(err){
+                callback(err);
+            }
+            callback(null,taskDetails)
+        });
+}
+function addTask(taskId, student, taskDetails, points, callback){
+    model.TaskModel.insert({task:taskId, student:student, taskDetails:taskDetails, points:points})
+        .exec(function(err,task){
+            if(err){
+                callback(err);
+            }
+            callback(null,task)
+        });
+
+}
+function addStudent(studentId, fName, lName, address, city, zip, phone, email, dailyPoints, callback){
+    model.StudentModel.insert({student:studentId, firstName:fName, lastName:lName, address:address, city:city,
+    zip:zip, phone:phone, email:email, dailyPoints:dailyPoints})
+        .exec(function(err,student){
+            if(err){
+                callback(err);
+            }
+            callback(null,student)
+        });
+
+}
+
+
+
+
+
 exports.getMyProfile = getMyProfile;
 exports.getMyClass = getMyClass;
 exports.getMyPeriods = getMyPeriods;
@@ -77,3 +133,9 @@ exports.getMyTasks = getMyTasks;
 exports.getMyClasses = getMyClasses;
 exports.updateDailyPoints = updateDailyPoints;
 exports.removeStudentFromClass = removeStudentFromClass;
+
+exports.addClass = addClass;
+exports.addPeriod = addPeriod;
+exports.addTaskDetails = addTaskDetails;
+exports.addTask = addTask;
+exports.addStudent = addStudent;
