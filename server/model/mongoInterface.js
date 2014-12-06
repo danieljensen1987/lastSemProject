@@ -1,5 +1,6 @@
 var model = require('../model/model');
 
+//what students can do
 function getMyProfile(userId, callback){
     model.StudentModel.find({_id: userId})
         .exec(function (err, user) {
@@ -39,6 +40,7 @@ function getMyTasks(studentId, callback){
         });
 }
 
+//what teachers can do
 function getMyClasses(teacherId, callback){
     model.ClasseModel.find({teachers:teacherId})
         .populate('students')
@@ -69,10 +71,56 @@ model.ClasseModel.findOneAndUpdate({students:studentId},{$pull:{students:student
     })
 }
 
+//what admins can do
+function getSemesters(callback){
+    model.SemesterModel.find()
+        .exec(function (err, semesters) {
+            if(err){
+                callback(err);
+            }
+            callback(null, semesters);
+        })
+}
+function getClasses(callback){
+    model.ClasseModel.find()
+        .exec(function (err, classes) {
+            if(err){
+                callback(err);
+            }
+            callback(null, classes);
+        })
+}
+function getPeriods(callback){
+    model.PeriodModel.find()
+        .exec(function (err, Periods) {
+            if(err){
+                callback(err);
+            }
+            callback(null, periods);
+        })
+}
+function getStudents(callback){
+    model.StudentModel.find()
+        .exec(function (err, students) {
+            if(err){
+                callback(err);
+            }
+            callback(null, students);
+        })
+}
+function getTeachers(callback){
+    model.TeachertModel.find()
+        .exec(function (err, teachers) {
+            if(err){
+                callback(err);
+            }
+            callback(null, teachers);
+        })
+}
 
-function addClass(classId, students, teachers, semester, callback){
-    model.ClasseModel.insert({class:classId, students:students, teachers:teachers, semester:semester})
-        .exec(function(err,classes){
+function addClass(classe, callback){
+    var json = new model.ClasseModel(classe);
+        json.save(function(err,classes){
             if (err){
                 callback(err);
             }
@@ -80,28 +128,27 @@ function addClass(classId, students, teachers, semester, callback){
         });
 
 }
-function addPeriod(periodId, description, classe, sDate, eDate, maxPoints, requiredPoints, callback){
-    model.PeriodModel.insert({period:periodId, description:description, class:classe, sDate:sDate, eDate:eDate,
-    maxPoints:maxPoints, requiredPoints:requiredPoints})
-        .exec(function(err,periods){
+function addPeriod(period, callback){
+    var json = new model.PeriodModel(period);
+        json.save(function(err,periods){
             if(err){
                 callback(err);
             }
             callback(null,periods)
         });
 }
-function addTaskDetails(taskDetailsId, description, period, callback){
-    model.TaskDetailModel.insert({taskDetails:taskDetailsId, description:description, period:period})
-        .exec(function(err,taskDetails){
+function addTaskDetails(taskDetails, callback){
+    var json = new model.TaskDetailModel(taskDetails);
+        json.save(function(err,taskDetails){
             if(err){
                 callback(err);
             }
             callback(null,taskDetails)
         });
 }
-function addTask(taskId, student, taskDetails, points, callback){
-    model.TaskModel.insert({task:taskId, student:student, taskDetails:taskDetails, points:points})
-        .exec(function(err,task){
+function addTask(task, callback){
+    var json = new model.TaskModel(task);
+        json.save(function(err,task){
             if(err){
                 callback(err);
             }
@@ -109,26 +156,26 @@ function addTask(taskId, student, taskDetails, points, callback){
         });
 
 }
-function addStudent(studentId, fName, lName, address, city, zip, phone, email, dailyPoints, callback){
-    model.StudentModel.insert({student:studentId, firstName:fName, lastName:lName, address:address, city:city,
-    zip:zip, phone:phone, email:email, dailyPoints:dailyPoints})
-        .exec(function(err,student){
+function addStudent(student, callback){
+    var json = new model.StudentModel(student);
+    json.save(function(err,student){
             if(err){
                 callback(err);
             }
             callback(null,student)
         });
-
 }
-
-
-
-
 
 exports.getMyProfile = getMyProfile;
 exports.getMyClass = getMyClass;
 exports.getMyPeriods = getMyPeriods;
 exports.getMyTasks = getMyTasks;
+
+exports.getSemesters = getSemesters;
+exports.getClasses = getClasses;
+exports.getPeriods = getPeriods;
+exports.getStudents = getStudents;
+exports.getTeachers = getTeachers;
 
 exports.getMyClasses = getMyClasses;
 exports.updateDailyPoints = updateDailyPoints;

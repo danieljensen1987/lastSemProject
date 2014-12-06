@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myAppRename.viewStudypoints', ['ngRoute'])
+angular.module('myAppRename.viewTeacher', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/view-teacher', {
