@@ -5,9 +5,7 @@ var mongoInterface = require('../model/mongoInterface');
 router.get('/getMyClasses/:teacherid', function(req, res) {
     var teacherId = req.params.teacherid;
     mongoInterface.getMyClasses(teacherId, function (err, classes) {
-        if(err){
-            res.send(err);
-        }
+        if(err) res.send(err);
         res.send(classes);
     });
 });
@@ -15,59 +13,45 @@ router.post('/updateDailyPoints/', function(req, res) {
     var studentsId = req.body._id;
     var dailyPoints = req.body.dailyPoints;
     mongoInterface.updateDailyPoints(studentsId,dailyPoints, function (err, student) {
-        if(err){
-            res.send(err)
-        }
+        if(err) res.send(err)
         res.send(student)
     });
 });
 router.get('/removeStudentFromClass/:studentid', function(req, res) {
     var studentsId = req.params.studentid;
     mongoInterface.removeStudentFromClass(studentsId, function (err, classe) {
-        if(err){
-            res.send(err)
-        }
+        if(err) res.send(err)
         res.send(classe)
     });
 });
 
 router.get('/getSemesters', function (req, res) {
     mongoInterface.getSemesters(function (err, semesters) {
-        if(err){
-            res.send(err);
-        }
+        if(err) res.send(err);
         res.send(semesters)
     })
 });
 router.get('/getClasses', function (req, res) {
     mongoInterface.getClasses(function (err, classes) {
-        if(err){
-            res.send(err);
-        }
+        if(err) res.send(err);
         res.send(classes)
     })
 });
 router.get('/getPeriods', function (req, res) {
-    mongoInterface.getClasses(function (err, periods) {
-        if(err){
-            res.send(err);
-        }
+    mongoInterface.getPeriods(function (err, periods) {
+        if(err) res.send(err);
         res.send(periods)
     })
 });
 router.get('/getStudents', function (req, res) {
     mongoInterface.getStudents(function (err, students) {
-        if(err){
-            res.send(err);
-        }
+        if(err) res.send(err);
         res.send(students)
     })
 });
 router.get('/getTeachers', function (req, res) {
     mongoInterface.getTeachers(function (err, teachers) {
-        if(err){
-            res.send(err);
-        }
+        if(err) res.send(err);
         res.send(teachers)
     })
 });
@@ -86,6 +70,12 @@ router.post('/updateClass', function (req, res) {
 });
 router.post('/addPeriod', function (req, res) {
     mongoInterface.addPeriod(req.body, function (err, period) {
+        if(err) res.send(err);
+        res.send(period);
+    })
+});
+router.post('/updatePeriod', function (req, res) {
+    mongoInterface.updatePeriod(req.body, function (err, period) {
         if(err) res.send(err);
         res.send(period);
     })

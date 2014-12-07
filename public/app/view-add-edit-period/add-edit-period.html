@@ -34,7 +34,7 @@
                         <div class="col-lg-12" style="padding: 0em">
                                 <label>Selected Classes:</label><br/>
                                 <select class="form-control" ng-model="allSelectedClasses" multiple style="height: 10em"
-                                        ng-options="class.semester + '. semester - ' + class._id for class in selectedClasses"></select>
+                                        ng-options="class.semester + '. semester - ' + class._id for class in addSelectedClasses"></select>
                         </div>
                 </div>
                 <div class="col-lg-12">
@@ -69,7 +69,7 @@
                         </div>
                 </div>
                 <div class="col-lg-12">
-                        <button ng-disabled="addForm.$invalid" ng-click="addNewPeriod()" class="btn btn-sm btn-success">add class</button>
+                        <button ng-disabled="addForm.$invalid" ng-click="addNewPeriod()" class="btn btn-sm btn-success">Add Period</button>
                 </div>
 
         </form>
@@ -81,72 +81,76 @@
 
                 <div class="col-lg-6">
                         <div class="col-lg-12" style="padding: 0em">
-                                <label>Select a class:</label><br/>
-                                <select class="form-control" ng-model="editSelectedClass"
-                                        ng-options="class.semester + '. semester - ' + class._id for class in classes">
+                                <label>Select a period:</label><br/>
+                                <select class="form-control" ng-model="editSelectedPeriod"
+                                        ng-options="period._id + ' classes: ' + period.classes for period in periods">
                                 </select>
                         </div>
+
                 </div>
                 <div class="col-lg-12"></div>
 
                 <div class="col-lg-5">
                         <div class="col-lg-12" style="padding: 0em">
-                                <label>Students:</label><br/>
-                                <select class="form-control" ng-model="editSelectedStudent" multiple style="height: 10em"
-                                        ng-options="student for student in editSelectedClass.students"></select>
+                                <label>All Classes:</label><br/>
+                                <select class="form-control" ng-model="editAllSelectedClasses" multiple style="height: 10em"
+                                        ng-options="student._id for student in classes"></select>
                         </div>
                 </div>
                 <div class="col-lg-1" style="padding: 0em">
                         <br/><br/>
-                        <button class="btn btn-sm btn-primary" ng-click="addStudentToClass(allSelectedStudent)">
-                        <span class="glyphicon glyphicon-backward"></span>
+                        <button class="btn btn-sm btn-primary" ng-click="addClassesToSelectedPeriod(editAllSelectedClasses)">
+                        <span class="glyphicon glyphicon-forward"></span>
                         </button>
                         <br/><br/>
-                        <button class="btn btn-sm btn-primary" ng-click="removeStudentFromClass(editSelectedStudent)">
-                                <span class="glyphicon glyphicon-forward"></span>
-                        </button>
-                </div>
-
-                <div class="col-lg-5" style="padding: 0em">
-                        <div class="col-lg-12" style="padding: 0em">
-                                <label>All:</label><br/>
-                                <select class="form-control" ng-model="allSelectedStudent" multiple style="height: 10em"
-                                        ng-options="student._id for student in students"></select>
-                        </div>
-                </div>
-
-
-
-                <div class="col-lg-12"></div>
-
-                <div class="col-lg-5">
-                        <div class="col-lg-12" style="padding: 0em">
-                                <label>Teachers:</label><br/>
-                                <select class="form-control" ng-model="editSelectedTeacher" multiple style="height: 10em"
-                                        ng-options="teacher for teacher in editSelectedClass.teachers"></select>
-                        </div>
-                </div>
-                <div class="col-lg-1" style="padding: 0em">
-                        <br/><br/>
-                        <button class="btn btn-sm btn-primary" ng-click="addTeacherToClass(allSelectedTeacher)">
+                        <button class="btn btn-sm btn-primary" ng-click="removeClassesFromSelectedPeriod(editSelectedClasses)">
                                 <span class="glyphicon glyphicon-backward"></span>
                         </button>
-                        <br/><br/>
-                        <button class="btn btn-sm btn-primary" ng-click="removeTeacherFromClass(editSelectedTeacher)">
-                                <span class="glyphicon glyphicon-forward"></span>
-                        </button>
                 </div>
 
                 <div class="col-lg-5" style="padding: 0em">
                         <div class="col-lg-12" style="padding: 0em">
-                                <label>All:</label><br/>
-                                <select class="form-control" ng-model="allSelectedTeacher" multiple style="height: 10em"
-                                        ng-options="teacher._id for teacher in teachers"></select>
+                                <label>Selected Classes:</label><br/>
+                                <select class="form-control" ng-model="editSelectedClasses" multiple style="height: 10em"
+                                        ng-options="class for class in editSelectedPeriod.classes"></select>
                         </div>
                 </div>
 
+                {{editSelectedPeriod.description}}
+
                 <div class="col-lg-12">
-                        <button ng-disabled="editForm.$invalid" ng-click="updateClass()" class="btn btn-sm btn-success">Update class</button>
+                        <div class="col-lg-12" style="padding: 0px">
+                                <label>Description:</label><br/>
+                                <input class="form-control" type="text" ng-model="editSelectedPeriod.description" required/>
+                        </div>
+                </div>
+
+                <div class="col-lg-6">
+                        <div class="col-lg-12" style="padding: 0px">
+                                <label>Start Date</label><br/>
+                                <input class="form-control" type="date" ng-model="editSelectedPeriod.sDate"/>
+                        </div>
+                </div>
+                <div class="col-lg-6">
+                        <div class="col-lg-12" style="padding: 0px">
+                                <label>Add End Date</label><br/>
+                                <input class="form-control" type="date" ng-model="editSelectedPeriod.eDate"/>
+                        </div>
+                </div>
+                <div class="col-lg-6">
+                        <div class="col-lg-12" style="padding: 0px">
+                                <label>Enter Max Points</label><br/>
+                                <input class="form-control" type="number" ng-model="editSelectedPeriod.maxPoints"/>
+                        </div>
+                </div>
+                <div class="col-lg-6">
+                        <div class="col-lg-12" style="padding: 0px">
+                                <label>Enter Required Points</label><br/>
+                                <input class="form-control" type="number" ng-model="editSelectedPeriod.requiredPoints"/>
+                        </div>
+                </div>
+                <div class="col-lg-12">
+                        <button ng-click="updatePeriod()" class="btn btn-sm btn-success">Update Period</button>
                 </div>
         </form>
 </div>
