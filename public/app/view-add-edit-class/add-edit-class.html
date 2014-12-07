@@ -1,18 +1,18 @@
 <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
 
 <div class="col-lg-6">
-        <form role="form" name="classForm" class="form-group-sm">
+        <form role="form" name="addForm" class="form-group-sm">
                 <legend>Add Class</legend>
                 <div class="col-lg-6">
                         <div class="col-lg-12" style="padding: 0px">
                                 <label>Enter class name:</label><br/>
-                                <input type="text" class="form-control" ng-model="classId" required/>
+                                <input type="text" class="form-control" ng-model="addId" required/>
                         </div>
                 </div>
                 <div class="col-lg-6">
                         <div class="col-lg-12" style="padding: 0px">
                                 <label>Select a semester:</label><br/>
-                                <select class="form-control" ng-model="classSelectedSemester"
+                                <select class="form-control" ng-model="addSelectedSemester"
                                         ng-options="semester._id + '. semester' for semester in semesters">
                                 </select>
                         </div>
@@ -20,34 +20,23 @@
                 <div class="col-lg-6">
                         <div class="col-lg-12" style="padding: 0px">
                                 <label>Add Students:</label><br/>
-                                <div class="col-lg-9" style="padding: 0px">
-                                        <select class="form-control" ng-model="classSelectedStudent"
-                                                ng-options="student.fName+ ' ' + student.lName for student in students"></select>
-                                </div>
-                                <div class="col-lg-2">
-                                        <button class="btn btn-sm btn-primary" ng-click="addStudent(classSelectedStudent._id)">Add</button><br/>
-                                </div>
-                                <div class="col-lg-12 well well-sm">
-                                        <div ng-repeat="student in classStudents">
-                                                {{student}}
+                                <select class="form-control" ng-model="addSelectedStudent" multiple style="height: 10em"
+                                        ng-options="student.fName+ ' ' + student.lName for student in students"></select>
+                                <div class="well well-sm">
+                                        <div ng-repeat="student in addSelectedStudent">
+                                                {{student._id}}
                                         </div>
                                 </div>
-
                         </div>
                 </div>
                 <div class="col-lg-6">
                         <div class="col-lg-12" style="padding: 0px">
                                 <label>Add Teachers:</label><br/>
-                                <div class="col-lg-9" style="padding: 0px">
-                                        <select class="form-control" ng-model="classSelectedTeacher"
-                                                ng-options="teacher.fName+ ' ' + teacher.lName for teacher in teachers"></select>
-                                </div>
-                                <div class="col-lg-2">
-                                        <button class="btn btn-sm btn-primary" ng-click="addTeacher(classSelectedTeacher._id)">Add</button>
-                                </div>
-                                <div class="col-lg-12 well well-sm">
-                                        <div ng-repeat="teacher in classTeachers">
-                                                {{teacher}}
+                                <select class="form-control" ng-model="addSelectedTeacher" multiple style="height: 10em"
+                                        ng-options="teacher.fName+ ' ' + teacher.lName for teacher in teachers"></select>
+                                <div class="well well-sm">
+                                        <div ng-repeat="teacher in addSelectedTeacher">
+                                                {{teacher._id}}
                                         </div>
                                 </div>
                         </div>
@@ -60,60 +49,77 @@
 </div>
 
 <div class="col-lg-6">
-        <form role="form" name="classForm" class="form-group-sm">
-                <legend>Add Class</legend>
+        <form role="form" name="editForm" class="form-group-sm">
+                <legend>Edit Class</legend>
+
                 <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Enter class name:</label><br/>
-                                <input type="text" class="form-control" ng-model="classId" required/>
-                        </div>
-                </div>
-                <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Select a semester:</label><br/>
-                                <select class="form-control" ng-model="classSelectedSemester"
-                                        ng-options="semester._id + '. semester' for semester in semesters">
+                        <div class="col-lg-12" style="padding: 0em">
+                                <label>Select a class:</label><br/>
+                                <select class="form-control" ng-model="editSelectedClass"
+                                        ng-options="class.semester + '. semester - ' + class._id for class in classes">
                                 </select>
                         </div>
                 </div>
-                <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Add Students:</label><br/>
-                                <div class="col-lg-9" style="padding: 0px">
-                                        <select class="form-control" ng-model="classSelectedStudent"
-                                                ng-options="student.fName+ ' ' + student.lName for student in students"></select>
-                                </div>
-                                <div class="col-lg-2">
-                                        <button class="btn btn-sm btn-primary" ng-click="addStudent(classSelectedStudent._id)">Add</button><br/>
-                                </div>
-                                <div class="col-lg-12 well well-sm">
-                                        <div ng-repeat="student in classStudents">
-                                                {{student}}
-                                        </div>
-                                </div>
+                <div class="col-lg-12"></div>
 
+                <div class="col-lg-5">
+                        <div class="col-lg-12" style="padding: 0em">
+                                <label>Students:</label><br/>
+                                <select class="form-control" ng-model="editSelectedStudent" multiple style="height: 10em"
+                                        ng-options="student for student in editSelectedClass.students"></select>
                         </div>
                 </div>
-                <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Add Teachers:</label><br/>
-                                <div class="col-lg-9" style="padding: 0px">
-                                        <select class="form-control" ng-model="classSelectedTeacher"
-                                                ng-options="teacher.fName+ ' ' + teacher.lName for teacher in teachers"></select>
-                                </div>
-                                <div class="col-lg-2">
-                                        <button class="btn btn-sm btn-primary" ng-click="addTeacher(classSelectedTeacher._id)">Add</button>
-                                </div>
-                                <div class="col-lg-12 well well-sm">
-                                        <div ng-repeat="teacher in classTeachers">
-                                                {{teacher}}
-                                        </div>
-                                </div>
+                <div class="col-lg-1" style="padding: 0em">
+                        <br/><br/>
+                        <button class="btn btn-sm btn-primary" ng-click="addStudentToClass(allSelectedStudent)">
+                        <span class="glyphicon glyphicon-backward"></span>
+                        </button>
+                        <br/><br/>
+                        <button class="btn btn-sm btn-primary" ng-click="removeStudentFromClass(editSelectedStudent)">
+                                <span class="glyphicon glyphicon-forward"></span>
+                        </button>
+                </div>
+
+                <div class="col-lg-5" style="padding: 0em">
+                        <div class="col-lg-12" style="padding: 0em">
+                                <label>All:</label><br/>
+                                <select class="form-control" ng-model="allSelectedStudent" multiple style="height: 10em"
+                                        ng-options="student._id for student in students"></select>
                         </div>
                 </div>
+
+
+
+                <div class="col-lg-12"></div>
+
+                <div class="col-lg-5">
+                        <div class="col-lg-12" style="padding: 0em">
+                                <label>Teachers:</label><br/>
+                                <select class="form-control" ng-model="editSelectedTeacher" multiple style="height: 10em"
+                                        ng-options="teacher for teacher in editSelectedClass.teachers"></select>
+                        </div>
+                </div>
+                <div class="col-lg-1" style="padding: 0em">
+                        <br/><br/>
+                        <button class="btn btn-sm btn-primary" ng-click="addTeacherToClass(allSelectedTeacher)">
+                                <span class="glyphicon glyphicon-backward"></span>
+                        </button>
+                        <br/><br/>
+                        <button class="btn btn-sm btn-primary" ng-click="removeTeacherFromClass(editSelectedTeacher)">
+                                <span class="glyphicon glyphicon-forward"></span>
+                        </button>
+                </div>
+
+                <div class="col-lg-5" style="padding: 0em">
+                        <div class="col-lg-12" style="padding: 0em">
+                                <label>All:</label><br/>
+                                <select class="form-control" ng-model="allSelectedTeacher" multiple style="height: 10em"
+                                        ng-options="teacher._id for teacher in teachers"></select>
+                        </div>
+                </div>
+
                 <div class="col-lg-12">
-                        <button ng-disabled="classForm.$invalid" ng-click="addNewClass()" class="btn btn-sm btn-success">add class</button>
+                        <button ng-disabled="editForm.$invalid" ng-click="updateClass()" class="btn btn-sm btn-success">Update class</button>
                 </div>
-
         </form>
 </div>

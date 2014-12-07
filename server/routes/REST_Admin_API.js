@@ -78,6 +78,12 @@ router.post('/addClass', function (req, res) {
         res.send(classe);
     })
 });
+router.post('/updateClass', function (req, res) {
+    mongoInterface.updateClass(req.body, function (err, classe) {
+        if(err) res.send(err);
+        res.send(classe);
+    })
+});
 router.post('/addPeriod', function (req, res) {
     mongoInterface.addPeriod(req.body, function (err, period) {
         if(err) res.send(err);
