@@ -10,10 +10,10 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
     }])
 
     .controller('View4Ctrl', function ($scope, $http) {
-        var teacherId = $scope.username;
+        //var teacherId = $scope.username;
         $http({
             method: 'GET',
-            url: 'adminApi/getMyClasses/' + teacherId
+            url: 'adminApi/getMyClasses/' + 'sybilmcguire@maroptic.com'
         })
             .success(function (data) {
                 $scope.classes = data;
@@ -132,10 +132,29 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
                     }
                     $scope.error = data;
                 });
-        }
+        };
 
         $scope.updatePoints = function () {
-            console.log($scope.studyPoints)
+            for(var i in $scope.studentsDailyPoints){
+                var json = {
+                    "studentId": $scope.studentsDailyPoints[i].student._id,
+                    "periodId": $scope.studentsDailyPoints[i].period,
+                    "dailyPoints": $scope.studentsDailyPoints[i].dailyPoints
+                }
+                $http
+                    .post('adminApi/updateStudentsDailyPoints', json)
+                    .success(function () {
+                        $scope.error = null;
+                    }).
+                    error(function (data, status) {
+                        if (status == 401) {
+                            $scope.error = "You are not authenticated to request these data";
+                            return;
+                        }
+                        $scope.error = data;
+                    });
+            };
+
         }
 
     })

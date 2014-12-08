@@ -50,6 +50,23 @@ function getPeriodsByClassId(classId, callback){
 }
 function getDailyPointsByPeriod(periodid, callback){
     model.DailyPointsModel.find({period:periodid})
+        .populate('student')
+        .exec(function (err, dailyPoints){
+            if (err) callback(err);
+            callback(null,dailyPoints);
+        })
+
+}
+//function getStudentsDailyPoints(studentId, period, callback){
+//    model.DailyPointsModel.find({student:studentId, period:period})
+//        .exec(function (err, dailyPoints){
+//            if (err) callback(err);
+//            callback(null,dailyPoints);
+//        })
+//
+//}
+function updateStudentsDailyPoints(studentId, period, points, callback){
+    model.DailyPointsModel.findOneAndUpdate({student:studentId, period:period},{$set:{dailyPoints:points}},{new:true})
         .exec(function (err, dailyPoints){
             if (err) callback(err);
             callback(null,dailyPoints);
@@ -57,14 +74,6 @@ function getDailyPointsByPeriod(periodid, callback){
 
 }
 
-function getStudentsDailyPoints(studentId, period, callback){
-    model.DailyPointsModel.find({student:studentId, period:period})
-        .exec(function (err, dailyPoints){
-            if (err) callback(err);
-            callback(null,dailyPoints);
-        })
-
-}
 function updateDailyPoints(studentId, points, callback){
     model.StudentModel.findOneAndUpdate({_id: studentId},{$set:{dailyPoints:points}},{new:true})
         .exec(function (err, user) {
@@ -110,7 +119,7 @@ function getStudents(callback){
         })
 }
 function getTeachers(callback){
-    model.TeachertModel.find()
+    model.TeacherModel.find()
         .exec(function (err, teachers) {
             if(err) callback(err);
             callback(null, teachers);
@@ -191,7 +200,8 @@ exports.getTeachers = getTeachers;
 exports.getMyClasses = getMyClasses;
 exports.getPeriodsByClassId = getPeriodsByClassId;
 exports.getDailyPointsByPeriod = getDailyPointsByPeriod;
-exports.getStudentsDailyPoints = getStudentsDailyPoints;
+//exports.getStudentsDailyPoints = getStudentsDailyPoints;
+exports.updateStudentsDailyPoints = updateStudentsDailyPoints;
 exports.updateDailyPoints = updateDailyPoints;
 exports.removeStudentFromClass = removeStudentFromClass;
 

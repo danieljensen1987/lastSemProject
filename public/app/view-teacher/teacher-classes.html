@@ -5,12 +5,17 @@
 <select ng-model="selectedPeriod" ng-options="period._id for period in periods" ng-click="getDailyPointsByPeriod(selectedPeriod._id)"></select>
 
 
-        <div ng-model="studyPoints" ng-repeat="dailyPoints in studentsDailyPoints">
-          {{dailyPoints.student}}
-          <br/>
-            <input style="width: 2em" ng-repeat="points in dailyPoints.dailyPoints track by $index" value="{{points}}"/>
+          <div ng-repeat="dailyPoints in studentsDailyPoints">
+            {{dailyPoints.student.fName}} {{dailyPoints.student.lName}}
+            <input ng-repeat="points in dailyPoints.dailyPoints track by $index" style="width: 2em"
+                   type="number" min="0" max="1" ng-model="dailyPoints.dailyPoints[$index]"/>
+            {{dailyPoints.dailyPoints}}
 
-        </div>
+
+            <!--<input type="text" ng-model="dailyPoints.dailyPoints"/>{{dailyPoints.dailyPoints}}-->
+          </div>
+
+
         <button ng-click="updatePoints()">add</button>
 <!--<div class="col-lg-12">
   <input class="col-lg-3" type="search" ng-model="search.$" placeholder="Search username or name">
