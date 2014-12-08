@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var mongoInterface = require('../model/mongoInterface');
+var jpa = require('../model/jpaInterface');
+var bcrypt = require('bcryptjs');
 
 router.get('/getMyClasses/:teacherid', function(req, res) {
     var teacherId = req.params.teacherid;
@@ -13,14 +15,14 @@ router.post('/updateDailyPoints/', function(req, res) {
     var studentsId = req.body._id;
     var dailyPoints = req.body.dailyPoints;
     mongoInterface.updateDailyPoints(studentsId,dailyPoints, function (err, student) {
-        if(err) res.send(err)
+        if(err) res.send(err);
         res.send(student)
     });
 });
 router.get('/removeStudentFromClass/:studentid', function(req, res) {
     var studentsId = req.params.studentid;
     mongoInterface.removeStudentFromClass(studentsId, function (err, classe) {
-        if(err) res.send(err)
+        if(err) res.send(err);
         res.send(classe)
     });
 });
@@ -93,10 +95,36 @@ router.post('/addTask', function (req, res) {
     })
 });
 router.post('/addStudent', function (req, res) {
-    mongoInterface.addStudent(req.body, function (err, student) {
-        if(err) res.send(err);
-        res.send(student);
-    })
+    var userName = req.body._id;
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash("test123", salt, function(err, hash) {
+            if(err){}
+            addToJPA(hash);
+        })
+    });
+    var addToJPA = function(hash){
+        var json = {
+            "userName":userName,
+            "password":hash,
+            "role":"student"
+        };
+        jpa.addUser('/user', json, function (err, data) {
+            if(err){}
+            if (data == true){
+                console.log("xxxxxxxxxxxxxxxxxxx" + req.body);
+                mongoInterface.addStudent(req.body, function (err, student) {
+                    if(err) res.send(err);
+                    res.send(student);
+                })
+            }
+
+        })
+    }
+
+
+
+
+
 });
 
 module.exports = router;

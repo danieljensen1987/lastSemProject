@@ -138,6 +138,7 @@ function addTask(task, callback){
 }
 function addStudent(student, callback){
     var json = new model.StudentModel(student);
+    console.log(json);
     json.save(function(err,student){
             if(err) callback(err);
             callback(null,student)

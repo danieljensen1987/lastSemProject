@@ -19,6 +19,23 @@ function login(path, json, callback) {
     });
 }
 
+function addUser(path, json, callback) {
+    var options = {
+        uri: url + path,
+        method: 'POST',
+        json: {
+            'userName':json.userName,
+            'password':json.password,
+            'role':"student"
+        }
+    };
+    request(options, function (error, data, body) {
+        if(error){
+            callback(body);
+        }
+        callback(null,body);
+    });
+}
 function changePassword(path, json, callback) {
     var options = {
         uri: url + path,
@@ -39,4 +56,5 @@ function changePassword(path, json, callback) {
 }
 
 exports.login = login;
+exports.addUser = addUser;
 exports.changePassword = changePassword;
