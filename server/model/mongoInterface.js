@@ -41,6 +41,14 @@ function getMyClasses(teacherId, callback){
             callback(null,classes);
         });
 }
+function getStudentsDailyPoints(studentId, period, callback){
+    model.DailyPointsModel.find({student:studentId, period:period})
+        .exec(function (err, dailyPoints){
+            if (err) callback(err);
+            callback(null,dailyPoints);
+        })
+
+}
 function updateDailyPoints(studentId, points, callback){
     model.StudentModel.findOneAndUpdate({_id: studentId},{$set:{dailyPoints:points}},{new:true})
         .exec(function (err, user) {
@@ -145,6 +153,8 @@ function addStudent(student, callback){
         });
 }
 
+
+
 exports.getMyProfile = getMyProfile;
 exports.getMyClass = getMyClass;
 exports.getMyPeriods = getMyPeriods;
@@ -157,6 +167,7 @@ exports.getStudents = getStudents;
 exports.getTeachers = getTeachers;
 
 exports.getMyClasses = getMyClasses;
+exports.getStudentsDailyPoints = getStudentsDailyPoints;
 exports.updateDailyPoints = updateDailyPoints;
 exports.removeStudentFromClass = removeStudentFromClass;
 

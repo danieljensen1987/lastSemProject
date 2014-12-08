@@ -60,6 +60,13 @@ var TaskDetailSchema = mongoose.Schema({
 
 });
 
+var DailyPointsSchema = mongoose.Schema({
+    _id: String,
+    period: { type: String, ref: 'periods'},
+    student: { type: String, ref: 'students'},
+    dailyPoints: [Number]
+});
+
 exports.StudentModel = mongoose.model('students', StudentSchema);
 exports.TeachertModel = mongoose.model('teachers', TeacherSchema);
 exports.SemesterModel = mongoose.model('semesters', SemesterSchema);
@@ -67,3 +74,4 @@ exports.ClasseModel = mongoose.model('classes', ClasseSchema);
 exports.PeriodModel = mongoose.model('periods', PeriodSchema);
 exports.TaskModel = mongoose.model('tasks', TaskSchema);
 exports.TaskDetailModel = mongoose.model('taskDetails', TaskDetailSchema);
+exports.DailyPointsModel = mongoose.model('dailyPoints', DailyPointsSchema);
