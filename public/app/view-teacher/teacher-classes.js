@@ -10,10 +10,10 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
     }])
 
     .controller('View4Ctrl', function ($scope, $http) {
-        //var teacherId = $scope.username;
+        var teacherId = $scope.username;
         $http({
             method: 'GET',
-            url: 'adminApi/getMyClasses/' + 'sybilmcguire@maroptic.com'
+            url: 'adminApi/getMyClasses/' + teacherId
         })
             .success(function (data) {
                 $scope.classes = data;
@@ -140,7 +140,7 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
                     "studentId": $scope.studentsDailyPoints[i].student._id,
                     "periodId": $scope.studentsDailyPoints[i].period,
                     "dailyPoints": $scope.studentsDailyPoints[i].dailyPoints
-                }
+                };
                 $http
                     .post('adminApi/updateStudentsDailyPoints', json)
                     .success(function () {
@@ -153,7 +153,7 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
                         }
                         $scope.error = data;
                     });
-            };
+            }
 
         }
 
