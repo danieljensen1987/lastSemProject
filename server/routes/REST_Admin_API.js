@@ -11,12 +11,29 @@ router.get('/getMyClasses/:teacherid', function(req, res) {
         res.send(classes);
     });
 });
+
+router.get('/getDailyPointsByPeriod/:periodid', function(req, res){
+    var periodId = req.params.periodid;
+    mongoInterface.getDailyPointsByPeriod(periodId, function(err, dailyPoints){
+        if(err) res.send(err);
+        res.send(dailyPoints);
+    });
+});
+
 router.get('/getStudentsDailyPoints/:studentid/:periodid', function(req, res){
     var studentId = req.params.studentid;
     var periodId = req.params.periodid;
     mongoInterface.getStudentsDailyPoints(studentId, periodId, function(err, dailyPoints){
         if(err) res.send(err);
         res.send(dailyPoints);
+    });
+});
+
+router.get('/getPeriodsByClassId/:classid', function(req, res){
+    var classId = req.params.classid;
+    mongoInterface.getPeriodsByClassId(classId, function(err, periodByClass){
+        if(err) res.send(err);
+        res.send(periodByClass);
     });
 });
 

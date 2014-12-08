@@ -41,6 +41,22 @@ function getMyClasses(teacherId, callback){
             callback(null,classes);
         });
 }
+function getPeriodsByClassId(classId, callback){
+    model.PeriodModel.find({classes:classId})
+        .exec(function(err, periods){
+            if(err) callback(err);
+            callback(null,periods);
+        });
+}
+function getDailyPointsByPeriod(periodid, callback){
+    model.DailyPointsModel.find({period:periodid})
+        .exec(function (err, dailyPoints){
+            if (err) callback(err);
+            callback(null,dailyPoints);
+        })
+
+}
+
 function getStudentsDailyPoints(studentId, period, callback){
     model.DailyPointsModel.find({student:studentId, period:period})
         .exec(function (err, dailyPoints){
@@ -173,6 +189,8 @@ exports.getStudents = getStudents;
 exports.getTeachers = getTeachers;
 
 exports.getMyClasses = getMyClasses;
+exports.getPeriodsByClassId = getPeriodsByClassId;
+exports.getDailyPointsByPeriod = getDailyPointsByPeriod;
 exports.getStudentsDailyPoints = getStudentsDailyPoints;
 exports.updateDailyPoints = updateDailyPoints;
 exports.removeStudentFromClass = removeStudentFromClass;
