@@ -52,14 +52,14 @@ function getStudentsDailyPoints(studentId, period, callback){
 function updateDailyPoints(studentId, points, callback){
     model.StudentModel.findOneAndUpdate({_id: studentId},{$set:{dailyPoints:points}},{new:true})
         .exec(function (err, user) {
-            if (err) callback(err)
+            if (err) callback(err);
             callback(null,user)
         });
 }
 function removeStudentFromClass(studentId, callback){
 model.ClasseModel.findOneAndUpdate({students:studentId},{$pull:{students:studentId}})
     .exec(function (err, data) {
-        if(err) callback(err)
+        if(err) callback(err);
         callback(null,data)
     })
 }
@@ -146,11 +146,17 @@ function addTask(task, callback){
 }
 function addStudent(student, callback){
     var json = new model.StudentModel(student);
-    console.log(json);
     json.save(function(err,student){
-            if(err) callback(err);
-            callback(null,student)
-        });
+        if(err) callback(err);
+        callback(null,student)
+    });
+}
+function addTeacher(teacher, callback){
+    var json = new model.TeacherModel(teacher);
+    json.save(function(err,teacher){
+        if(err) callback(err);
+        callback(null,teacher)
+    });
 }
 
 
@@ -178,3 +184,4 @@ exports.updatePeriod = updatePeriod;
 exports.addTaskDetails = addTaskDetails;
 exports.addTask = addTask;
 exports.addStudent = addStudent;
+exports.addTeacher = addTeacher;

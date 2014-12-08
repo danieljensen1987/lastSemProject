@@ -23,11 +23,7 @@ function addUser(path, json, callback) {
     var options = {
         uri: url + path,
         method: 'POST',
-        json: {
-            'userName':json.userName,
-            'password':json.password,
-            'role':"student"
-        }
+        json: json
     };
     request(options, function (error, data, body) {
         if(error){

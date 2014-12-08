@@ -31,11 +31,12 @@ angular.module('myAppRename.viewAddEditUser', ['ngRoute'])
                 zip:$scope.zip,
                 phone:$scope.phone,
                 email:$scope.email,
+                role:$scope.roleName.toLowerCase(),
                 dailyPoints:0
             }
 
             $http
-                .post('adminApi/addStudent', $scope.newUser)
+                .post('adminApi/addUser', $scope.newUser)
                 .success(function () {
                     $scope.userId = $scope.newUser._id;
                     $scope.error = null;

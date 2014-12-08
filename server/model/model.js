@@ -68,7 +68,7 @@ var DailyPointsSchema = mongoose.Schema({
 });
 
 exports.StudentModel = mongoose.model('students', StudentSchema);
-exports.TeachertModel = mongoose.model('teachers', TeacherSchema);
+exports.TeacherModel = mongoose.model('teachers', TeacherSchema);
 exports.SemesterModel = mongoose.model('semesters', SemesterSchema);
 exports.ClasseModel = mongoose.model('classes', ClasseSchema);
 exports.PeriodModel = mongoose.model('periods', PeriodSchema);

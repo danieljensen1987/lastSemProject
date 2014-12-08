@@ -103,8 +103,9 @@ router.post('/addTask', function (req, res) {
         res.send(task);
     })
 });
-router.post('/addStudent', function (req, res) {
+router.post('/addUser', function (req, res) {
     var userName = req.body._id;
+    var role = req.body.role;
     bcrypt.genSalt(10, function(err, salt) {
         bcrypt.hash("test123", salt, function(err, hash) {
             if(err){}
@@ -115,25 +116,35 @@ router.post('/addStudent', function (req, res) {
         var json = {
             "userName":userName,
             "password":hash,
-            "role":"student"
+            "role":role
         };
+
         jpa.addUser('/user', json, function (err, data) {
             if(err){}
             if (data == true){
-                console.log("xxxxxxxxxxxxxxxxxxx" + req.body);
-                mongoInterface.addStudent(req.body, function (err, student) {
-                    if(err) res.send(err);
-                    res.send(student);
-                })
+                switch (role){
+                    case 'student':
+                        mongoInterface.addStudent(req.body, function (err, student) {
+                            if(err) res.send(err);
+                            res.send(student);
+                        });
+                        break;
+                    case 'teacher':
+                        mongoInterface.addTeacher(req.body, function (err, teacher) {
+                            if(err) res.send(err);
+                            res.send(teacher);
+                        });
+                        break;
+                    case 'admin':
+                        mongoInterface.addTeacher(req.body, function (err, teacher) {
+                            if(err) res.send(err);
+                            res.send(teacher);
+                        });
+                        break;
+                }
             }
-
-        })
-    }
-
-
-
-
-
+        });
+    };
 });
 
 module.exports = router;
