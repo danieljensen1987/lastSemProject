@@ -109,6 +109,17 @@ function getTaskDetails() {
     })
 }
 
+function getDailyPoints(){
+    return dailyPoints.map(function(dailyPoints){
+        return {
+            _id: dailyPoints._id,
+            period: dailyPoints.period,
+            student: dailyPoints.student,
+            dailyPoints: dailyPoints.dailyPoints
+        };
+    })
+}
+
 var students = readData('students.json');
 var teachers = readData('teachers.json');
 var semesters = readData('semesters.json');
@@ -116,6 +127,7 @@ var classes = readData('classes.json');
 var periods = readData('periods.json');
 var tasks = readData('tasks.json');
 var taskDetails = readData('taskDetails.json');
+var dailyPoints = readData('dailyPoints.json');
 
 var db = mongoose.connect(dbUrl);
 db.connection.once('open', function() {
@@ -133,6 +145,7 @@ model.ClasseModel.remove({}).exec();
 model.PeriodModel.remove({}).exec();
 model.TaskModel.remove({}).exec();
 model.TaskDetailModel.remove({}).exec();
+model.DailyPointsModel.remove({}).exec();
 var done = [0,0,0,0,0,0];
 
 function closeDatabase() {
@@ -160,6 +173,7 @@ addData(getClasses(), model.ClasseModel);
 addData(getPeriods(), model.PeriodModel);
 addData(getTasks(), model.TaskModel);
 addData(getTaskDetails(), model.TaskDetailModel);
+addData(getDailyPoints(), model.DailyPointsModel);
 
 async.series(asyncTasks, function(){
     closeDatabase();

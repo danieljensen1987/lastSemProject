@@ -9,6 +9,15 @@ router.get('/getMyClasses/:teacherid', function(req, res) {
         res.send(classes);
     });
 });
+router.get('/getStudentsDailyPoints/:studentid/:periodid', function(req, res){
+    var studentId = req.params.studentid;
+    var periodId = req.params.periodid;
+    mongoInterface.getStudentsDailyPoints(studentId, periodId, function(err, dailyPoints){
+        if(err) res.send(err);
+        res.send(dailyPoints);
+    });
+});
+
 router.post('/updateDailyPoints/', function(req, res) {
     var studentsId = req.body._id;
     var dailyPoints = req.body.dailyPoints;
