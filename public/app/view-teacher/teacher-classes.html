@@ -1,7 +1,18 @@
 <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
 
 <br/>
-<div class="col-lg-12">
+<select ng-model="selectedClass" ng-options="class._id for class in classes" ng-click="getPeriodsByClassId(selectedClass._id)"></select>
+<select ng-model="selectedPeriod" ng-options="period._id for period in periods" ng-click="getDailyPointsByPeriod(selectedPeriod._id)"></select>
+
+
+        <div ng-model="studyPoints" ng-repeat="dailyPoints in studentsDailyPoints">
+          {{dailyPoints.student}}
+          <br/>
+            <input style="width: 2em" ng-repeat="points in dailyPoints.dailyPoints track by $index" value="{{points}}"/>
+
+        </div>
+        <button ng-click="updatePoints()">add</button>
+<!--<div class="col-lg-12">
   <input class="col-lg-3" type="search" ng-model="search.$" placeholder="Search username or name">
 </div>
 <br/><br/>
@@ -43,4 +54,4 @@
       </tr>
     </table>
   </div>
-</div>
+</div>-->

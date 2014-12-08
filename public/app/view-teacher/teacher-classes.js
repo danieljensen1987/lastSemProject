@@ -17,6 +17,7 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
         })
             .success(function (data) {
                 $scope.classes = data;
+                $scope.selectedClass = $scope.classes[0];
                 $scope.error = null;
             }).
             error(function (data, status) {
@@ -26,6 +27,46 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
                 }
                 $scope.error = data;
             });
+
+
+        $scope.getPeriodsByClassId = function (classId){
+            $http({
+                method: 'GET',
+                url: 'adminApi/getPeriodsByClassId/' + classId
+            })
+                .success(function (data) {
+                    $scope.periods = data;
+                    $scope.selectedPeriod = $scope.periods[0];
+                    $scope.error = null;
+                }).
+                error(function (data, status) {
+                    if(status == 401){
+                        $scope.error ="You are not authenticated to request these data";
+                        return;
+                    }
+                    $scope.error = data;
+                });
+
+        };
+
+        $scope.getDailyPointsByPeriod = function(periodId){
+            $http({
+                method: 'GET',
+                url: 'adminApi/getDailyPointsByPeriod/' + periodId
+            })
+                .success(function (data) {
+                    $scope.studentsDailyPoints = data;
+                    $scope.error = null;
+                }).
+                error(function (data, status) {
+                    if(status == 401){
+                        $scope.error ="You are not authenticated to request these data";
+                        return;
+                    }
+                    $scope.error = data;
+                });
+
+        };
 
         $scope.updateDailyPoints = function (student,operator){
             var newDayliPoints = 0;
@@ -91,6 +132,10 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
                     }
                     $scope.error = data;
                 });
+        }
+
+        $scope.updatePoints = function () {
+            console.log($scope.studyPoints)
         }
 
     })
