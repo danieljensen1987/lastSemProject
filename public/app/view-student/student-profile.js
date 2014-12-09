@@ -10,6 +10,7 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
     }])
     .controller('View2Ctrl', ['$scope', '$http', function ($scope, $http) {
         var studentId = $scope.username;
+        //var studentId = "vincentpena@maroptic.com";
         $http({
             method: 'GET',
             url: 'userApi/getMyProfile/'+studentId
@@ -49,6 +50,23 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
         })
             .success(function (data) {
                 $scope.tasks = data;
+
+                $scope.error = null;
+            }).
+            error(function (data, status) {
+                if (status == 401) {
+                    $scope.error = "You are not authenticated to request these data";
+                    return;
+                }
+                $scope.error = data;
+            });
+
+        $http({
+            method: 'GET',
+            url: 'userApi/getMyDailyPoints/'+studentId
+        })
+            .success(function (data) {
+                $scope.dailyPoints = data;
                 $scope.error = null;
             }).
             error(function (data, status) {
@@ -78,12 +96,29 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
                 });
         };
 
-        $scope.getTotalPoints = function (tasks) {
-            var total = 0;
-            for (var i in tasks){
-                total += tasks[i].points;
+        $scope.getTotalPoints = function (points,tasks, period) {
+            var sum = 0;
+            for(var i in points){
+                if (points[i] == true){
+                    sum++;
+                }
             }
-            return total;
+            for (var i in tasks){
+                if(tasks[i].taskDetails.period == period){
+                    sum += tasks[i].points;
+                }
+            }
+            return sum;
+        };
+
+        $scope.getTotalDailyPointsForPeriod = function (points) {
+            var sum = 0;
+            for(var i in points){
+                if (points[i] == true){
+                    sum++;
+                }
+            }
+            return sum;
         };
 
         $scope.toggle = true;

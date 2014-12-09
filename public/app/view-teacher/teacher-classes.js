@@ -13,7 +13,7 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
         var teacherId = $scope.username;
         $http({
             method: 'GET',
-            url: 'adminApi/getMyClasses/' + "sybilmcguire@maroptic.com"
+            url: 'adminApi/getMyClasses/' + teacherId
         })
             .success(function (data) {
                 $scope.classes = data;
@@ -110,7 +110,6 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
         };
 
         $scope.studentsTotalPoints = function(points){
-            console.log(points);
             var sum = 0;
             for(var i in points){
                 if (points[i] == true){
@@ -118,7 +117,7 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
                 }
             }
             return sum;
-        }
+        };
 
 
         $scope.removeStudentFromClass = function (studentId){

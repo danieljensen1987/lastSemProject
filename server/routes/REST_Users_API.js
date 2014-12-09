@@ -48,6 +48,14 @@ router.get('/getMyTasks/:studentid', function(req, res) {
 
 });
 
+router.get('/getMyDailyPoints/:studentid', function(req, res){
+    var studentId = req.params.studentid;
+    //var periodId = req.params.periodid;
+    mongoInterface.getMyDailyPoints(studentId, function(err, dailyPoints){
+        if(err) res.send(err);
+        res.send(dailyPoints);
+    });
+});
 
 router.post('/changePassword', function(req, res) {
     var newSaltedPass = "";

@@ -31,6 +31,15 @@ function getMyTasks(studentId, callback){
             callback(null, tasks);
         });
 }
+function getMyDailyPoints(studentId, callback){
+    model.DailyPointsModel.find({student:studentId})
+        .exec(function (err, dailyPoints){
+            if (err) callback(err);
+            console.log(dailyPoints);
+            callback(null,dailyPoints);
+        })
+
+}
 
 //what teachers can do
 function getMyClasses(teacherId, callback){
@@ -190,6 +199,7 @@ exports.getMyProfile = getMyProfile;
 exports.getMyClass = getMyClass;
 exports.getMyPeriods = getMyPeriods;
 exports.getMyTasks = getMyTasks;
+exports.getMyDailyPoints = getMyDailyPoints;
 
 exports.getSemesters = getSemesters;
 exports.getClasses = getClasses;
