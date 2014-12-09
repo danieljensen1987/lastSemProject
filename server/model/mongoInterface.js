@@ -157,6 +157,13 @@ function addPeriod(period, callback){
             callback(null,periods)
         });
 }
+function addDailyPoints(dailyPoints, callback){
+    var json = new model.DailyPointsModel(dailyPoints);
+    json.save(function(err, dailyPoints){
+        if(err) callback(err);
+        callback(null, dailyPoints)
+    });
+}
 function updatePeriod(period, callback){
     model.PeriodModel.findOneAndUpdate({_id:period._id}, {$set:period}, {new: true}, function(err, period) {
         if (err) callback(err);
@@ -218,6 +225,7 @@ exports.removeStudentFromClass = removeStudentFromClass;
 exports.addClass = addClass;
 exports.updateClass = updateClass;
 exports.addPeriod = addPeriod;
+exports.addDailyPoints = addDailyPoints;
 exports.updatePeriod = updatePeriod;
 exports.addTaskDetails = addTaskDetails;
 exports.addTask = addTask;

@@ -10,6 +10,7 @@ angular.module('myAppRename.viewAddEditPeriod', ['ngRoute'])
     }])
 
     .controller('View6Ctrl', function ($scope, $http) {
+
         getView();
         function getView(){
             $http({
@@ -44,30 +45,6 @@ angular.module('myAppRename.viewAddEditPeriod', ['ngRoute'])
                 });
         }
 
-        $scope.addSelectedClasses = [];
-        $scope.addClassesToNewPeriod = function (classes) {
-            for(var i in classes){
-                var exists = false;
-                for(var j in $scope.addSelectedClasses){
-                    if($scope.addSelectedClasses[j]._id === classes[i]._id){
-                        exists = true;
-                    }
-                }
-                if (exists === false){
-                    $scope.addSelectedClasses.push(classes[i]);
-                }
-            }
-
-        };
-        $scope.removeClassesFromNewPeriod = function (classes){
-            for(var i in classes){
-                for(var j in $scope.addSelectedClasses){
-                    if($scope.addSelectedClasses[j] === classes[i]){
-                        $scope.addSelectedClasses.splice(j,1);
-                    }
-                }
-            }
-        };
         $scope.addClassesToSelectedPeriod = function (classes) {
             for(var i in classes){
                 var exists = false;
@@ -93,23 +70,39 @@ angular.module('myAppRename.viewAddEditPeriod', ['ngRoute'])
         };
 
         $scope.addNewPeriod = function (){
-            var classes = [];
-            for(var i in $scope.addSelectedClasses){
-                classes.push($scope.addSelectedClasses[i]._id)
+            var sDate = $scope.newPeriod.sDate;
+            var eDate = $scope.newPeriod.eDate;
+            var periodLength =  Math.floor((Date.parse(eDate) - Date.parse(sDate))/1000/60/60/24);
+            var dailyPoints = new Array(periodLength);
+            for (var i = 0; i < dailyPoints.length; ++i) {
+                dailyPoints[i] = false;
             }
-            var newPeriod = {
-                "_id":$scope.addId,
-                "description":$scope.addDescription,
-                "sDate": $scope.addSdate,
-                "eDate": $scope.addEdate,
-                "maxPoints": $scope.addMaxPoints,
-                "requiredPoints": $scope.addRequiredPoints,
-                "classes": classes
-            };
-
+            for(var i in $scope.classes){
+                if($scope.classes[i]._id == $scope.newPeriod.classes){
+                    for(var j in $scope.classes[i].students){
+                        var json = {
+                            "period":$scope.newPeriod._id,
+                            "student":$scope.classes[i].students[j],
+                            "dailyPoints":dailyPoints
+                        }
+                        $http
+                            .post('adminApi/addDailyPoints', json)
+                            .success(function () {
+                                $scope.error = null;
+                            }).
+                            error(function (data, status) {
+                                if (status == 401) {
+                                    $scope.error = "You are not authenticated to request these data";
+                                    return;
+                                }
+                                $scope.error = data;
+                            });
+                    }
+                }
+            }
 
             $http
-                .post('adminApi/addPeriod', newPeriod)
+                .post('adminApi/addPeriod', $scope.newPeriod)
                 .success(function () {
                     getView();
                     $scope.error = null;

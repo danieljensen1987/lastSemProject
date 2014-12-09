@@ -1,78 +1,38 @@
 <div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div>
 <br/>
-<select ng-model="selectedClass" ng-options="class._id for class in classes" ng-click="getPeriodsByClassId(selectedClass._id)"></select>
-<select ng-model="selectedPeriod" ng-options="period._id for period in periods" ng-click="getDailyPointsByPeriod(selectedPeriod._id)"></select>
-<div data-ng-app="" data-ng-init="weeks=['1','2','3','4'];
-days=['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20']">
+<select ng-model="selectedClass" ng-options="class._id for class in classes"
+        ng-click="getPeriodsByClassId(selectedClass._id)">
+  <option value="">-- Choose Class --</option>
+</select>
+<select ng-model="selectedPeriod" ng-options="period._id for period in periods"
+        ng-click="getDailyPointsByPeriod(selectedPeriod._id)">
+  <option value="">-- Choose Period --</option>
+</select>
+<br/>
+<br/>
 
-  <table class="table">
-    <tr>
-      <th></th>
-      <th colspan="5" data-ng-repeat="x in weeks">Week {{x}}</th>
-      <th></th>
-    </tr>
-    <tr>
-      <th>Name \ day</th>
-      <th data-ng-repeat="y in days">{{y}}</th>
-      <th>Total</th>
-    </tr>
-    <tr ng-repeat="dailyPoints in studentsDailyPoints">
-      <th>{{dailyPoints.student.fName}} {{dailyPoints.student.lName}}</th>
-      <td ng-repeat="points in dailyPoints.dailyPoints track by $index">
-        <input type="checkbox" ng-model="dailyPoints.dailyPoints[$index]"/>
-      </td>
-      <td>{{studentsTotalPoints(dailyPoints.dailyPoints)}}</td>
-    </tr>
-    <tr data-ng-repeat="dailyPoints in studentsDailyPoints">
-      {{dailyPoints.student.fName}} {{dailyPoints.student.lName}}
-    </tr>
+<table class="table">
+  <tr>
+    <th></th>
+    <th colspan="5" ng-repeat="week in weeks">Week {{week}}</th>
+    <th></th>
+  </tr>
+  <tr>
+    <th>Name \ day</th>
+    <th ng-repeat="day in days track by $index">{{day}}</th>
+    <th>Total</th>
+  </tr>
+  <tr ng-repeat="dailyPoints in studentsDailyPoints">
+    <th>{{dailyPoints.student.fName}} {{dailyPoints.student.lName}}</th>
+    <td ng-repeat="points in dailyPoints.dailyPoints track by $index">
+      <input type="checkbox" ng-model="dailyPoints.dailyPoints[$index]"/>
+    </td>
+    <td>{{studentsTotalPoints(dailyPoints.dailyPoints)}}</td>
+  </tr>
+  <tr data-ng-repeat="dailyPoints in studentsDailyPoints">
+    {{dailyPoints.student.fName}} {{dailyPoints.student.lName}}
+  </tr>
 
-  </table>
-</div>
+</table>
 
-
-
-<button ng-click="updatePoints()">add</button>
-<!--<div class="col-lg-12">
-  <input class="col-lg-3" type="search" ng-model="search.$" placeholder="Search username or name">
-</div>
-<br/><br/>
-
-<div class="col-lg-12" ng-repeat="class in classes">
-  <div ng-click="toggle = !toggle">
-    <label class="text-primary">{{class.semester}}. semester - {{class._id}}</label>
-  </div>
-  <div class="col-lg-12" style="padding: 0em" ng-hide="toggle">
-
-    <table class="table">
-      <tr>
-        <th><a href="" ng-click="predicate = '_id'; reverse=!reverse" style="text-decoration: none">Username</a></th>
-        <th><a href="" ng-click="predicate = 'fName'; reverse=!reverse" style="text-decoration: none">Name</a>
-
-        </th>
-        <th><a href="" ng-click="predicate = 'dailyPoints'; reverse=!reverse" style="text-decoration: none">Daily Points</a></th>
-        <th><a href="" style="text-decoration: none">Add / Sub</a></th>
-        <th><a href="" style="text-decoration: none">Remove Student</a></th>
-      </tr>
-
-      <tr ng-repeat="student in class.students | orderBy:predicate:reverse | filter:filter | filter:search">
-        <td class="col-lg-3">{{student._id}}</td>
-        <td class="col-lg-3">{{student.fName}} {{student.lName}}</td>
-        <td >{{student.dailyPoints}}</td>
-        <td>
-          <button class="btn btn-success btn-sm" ng-click="updateDailyPoints(student,'plus')">
-            <span class="glyphicon glyphicon-plus"></span>
-          </button>
-          <button class="btn btn-primary btn-sm" ng-click="updateDailyPoints(student,'minus')">
-            <span class="glyphicon glyphicon-minus"></span>
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-danger btn-sm" ng-click="removeStudentFromClass(student._id)">
-            <span class="glyphicon glyphicon-remove"></span>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>-->
+<button style="float: right" class="btn btn-success" ng-click="updatePoints()">add</button>

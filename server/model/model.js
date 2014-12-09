@@ -61,7 +61,6 @@ var TaskDetailSchema = mongoose.Schema({
 });
 
 var DailyPointsSchema = mongoose.Schema({
-    _id: String,
     period: { type: String, ref: 'periods'},
     student: { type: String, ref: 'students'},
     dailyPoints: [Boolean]

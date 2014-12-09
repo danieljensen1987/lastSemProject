@@ -10,14 +10,16 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
     }])
 
     .controller('View4Ctrl', function ($scope, $http) {
-        var teacherId = $scope.username;
+        //var teacherId = $scope.username;
+        $scope.days = ['mo','tu','we','th','fr','mo','tu','we','th','fr','mo','tu','we','th','fr','mo','tu','we','th','fr'];
+        $scope.weeks = ['1','2','3','4'];
+        var teacherId = "sybilmcguire@maroptic.com"
         $http({
             method: 'GET',
             url: 'adminApi/getMyClasses/' + teacherId
         })
             .success(function (data) {
                 $scope.classes = data;
-                $scope.selectedClass = $scope.classes[0];
                 $scope.error = null;
             }).
             error(function (data, status) {
@@ -28,7 +30,6 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
                 $scope.error = data;
             });
 
-
         $scope.getPeriodsByClassId = function (classId){
             $http({
                 method: 'GET',
@@ -36,7 +37,6 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
             })
                 .success(function (data) {
                     $scope.periods = data;
-                    $scope.selectedPeriod = $scope.periods[0];
                     $scope.error = null;
                 }).
                 error(function (data, status) {

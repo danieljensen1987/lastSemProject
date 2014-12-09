@@ -107,6 +107,12 @@ router.post('/addPeriod', function (req, res) {
         res.send(period);
     })
 });
+router.post('/addDailyPoints', function (req, res) {
+    mongoInterface.addDailyPoints(req.body, function (err, dailyPoints) {
+        if(err) res.send(err);
+        res.send(dailyPoints);
+    })
+});
 router.post('/updatePeriod', function (req, res) {
     mongoInterface.updatePeriod(req.body, function (err, period) {
         if(err) res.send(err);

@@ -9,8 +9,8 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
         });
     }])
     .controller('View2Ctrl', ['$scope', '$http', function ($scope, $http) {
-        var studentId = $scope.username;
-        //var studentId = "vincentpena@maroptic.com";
+        //var studentId = $scope.username;
+        var studentId = "vincentpena@maroptic.com";
         $http({
             method: 'GET',
             url: 'userApi/getMyProfile/'+studentId

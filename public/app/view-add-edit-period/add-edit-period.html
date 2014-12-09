@@ -4,69 +4,40 @@
         <form role="form" name="addForm" class="form-group-sm">
                 <legend>Add Period</legend>
                 <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Enter period name:</label><br/>
-                                <input class="form-control" type="text" ng-model="addId" required/>
-                        </div>
+                        <label>Enter period name:</label><br/>
+                        <input class="form-control" type="text" ng-model="newPeriod._id" required/>
                 </div>
-
                 <div class="col-lg-12"></div>
-
-                <div class="col-lg-5">
-                        <div class="col-lg-12" style="padding: 0em">
-                                <label>All Classes:</label><br/>
-                                <select class="form-control" ng-model="allClasses" multiple style="height: 10em"
-                                        ng-options="class.semester + '. semester - ' + class._id for class in classes"></select>
-                        </div>
-                </div>
-                <div class="col-lg-1" style="padding: 0em">
-                        <br/><br/>
-                        <button class="btn btn-sm btn-primary" ng-click="addClassesToNewPeriod(allClasses)">
-                                <span class="glyphicon glyphicon-forward"></span>
-                        </button>
-                        <br/><br/>
-                        <button class="btn btn-sm btn-primary" ng-click="removeClassesFromNewPeriod(allSelectedClasses)">
-                                <span class="glyphicon glyphicon-backward"></span>
-                        </button>
+                <div class="col-lg-6">
+                        <label>Select Class:</label><br/>
+                        <select class="form-control" ng-model="newPeriod.classes" size="5" style="height: 10em" required>
+                                <option ng-repeat="classe in classes" value="{{classe._id}}">
+                                        {{classe.semester}}.semester - {{classe._id}}
+                                </option>
+                        </select>
                 </div>
 
-                <div class="col-lg-5" style="padding: 0em">
-                        <div class="col-lg-12" style="padding: 0em">
-                                <label>Selected Classes:</label><br/>
-                                <select class="form-control" ng-model="allSelectedClasses" multiple style="height: 10em"
-                                        ng-options="class.semester + '. semester - ' + class._id for class in addSelectedClasses"></select>
-                        </div>
-                </div>
                 <div class="col-lg-12">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Add Description:</label><br/>
-                                <input class="form-control" type="text" ng-model="addDescription" required/>
-                        </div>
+                        <label>Add Description:</label><br/>
+                        <input class="form-control" type="text" ng-model="newPeriod.description" required/>
                 </div>
 
                 <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Add Start Date</label><br/>
-                                <input class="form-control" type="date" ng-model="addSdate"/>
-                        </div>
+                        <label>Add Start Date</label><br/>
+                        <input class="form-control" type="date" ng-model="newPeriod.sDate" required/>
                 </div>
                 <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Add End Date</label><br/>
-                                <input class="form-control" type="date" ng-model="addEdate"/>
-                        </div>
+                        <label>Add End Date</label><br/>
+                        <input class="form-control" type="date" ng-model="newPeriod.eDate" required/>
                 </div>
                 <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Enter Max Points</label><br/>
-                                <input class="form-control" type="number" ng-model="addMaxPoints"/>
-                        </div>
+                        <label>Enter Max Points</label><br/>
+                        <input class="form-control" type="number" ng-model="newPeriod.maxPoints" required/>
+
                 </div>
                 <div class="col-lg-6">
-                        <div class="col-lg-12" style="padding: 0px">
-                                <label>Enter Required Points</label><br/>
-                                <input class="form-control" type="number" ng-model="addRequiredPoints"/>
-                        </div>
+                        <label>Enter Required Points</label><br/>
+                        <input class="form-control" type="number" ng-model="newPeriod.requiredPoints" required/>
                 </div>
                 <div class="col-lg-12">
                         <button ng-disabled="addForm.$invalid" ng-click="addNewPeriod()" class="btn btn-sm btn-success">Add Period</button>
@@ -100,7 +71,7 @@
                 <div class="col-lg-1" style="padding: 0em">
                         <br/><br/>
                         <button class="btn btn-sm btn-primary" ng-click="addClassesToSelectedPeriod(editAllSelectedClasses)">
-                        <span class="glyphicon glyphicon-forward"></span>
+                                <span class="glyphicon glyphicon-forward"></span>
                         </button>
                         <br/><br/>
                         <button class="btn btn-sm btn-primary" ng-click="removeClassesFromSelectedPeriod(editSelectedClasses)">
