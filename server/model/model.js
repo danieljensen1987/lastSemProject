@@ -39,7 +39,7 @@ var ClasseSchema = mongoose.Schema({
 var PeriodSchema = mongoose.Schema({
     _id: String,
     description: String,
-    classes: [{ type: String, ref: 'classes' }],
+    classes: { type: String, ref: 'classes' },
     sDate: String,
     eDate: String,
     maxPoints: Number,
@@ -64,7 +64,7 @@ var DailyPointsSchema = mongoose.Schema({
     _id: String,
     period: { type: String, ref: 'periods'},
     student: { type: String, ref: 'students'},
-    dailyPoints: [Number]
+    dailyPoints: [Boolean]
 });
 
 

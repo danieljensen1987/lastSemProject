@@ -139,7 +139,7 @@ db.connection.on('error', function(err) {
 });
 
 model.StudentModel.remove({}).exec();
-model.TeachertModel.remove({}).exec();
+model.TeacherModel.remove({}).exec();
 model.SemesterModel.remove({}).exec();
 model.ClasseModel.remove({}).exec();
 model.PeriodModel.remove({}).exec();
@@ -167,7 +167,7 @@ function addData(data, dataModel) {
 }
 
 addData(getStudents(), model.StudentModel);
-addData(getTeachers(), model.TeachertModel);
+addData(getTeachers(), model.TeacherModel);
 addData(getSemesters(), model.SemesterModel);
 addData(getClasses(), model.ClasseModel);
 addData(getPeriods(), model.PeriodModel);
