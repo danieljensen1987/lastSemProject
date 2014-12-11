@@ -1,15 +1,14 @@
 'use strict';
 
-angular.module('myAppRename.viewAddEditClass', ['ngRoute'])
+angular.module('myAppRename.viewEdit', ['ngRoute'])
 
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/view-add-edit-class', {
-            templateUrl: 'app/view-add-edit-class/add-edit-class.html',
-            controller: 'View5Ctrl'
+        $routeProvider.when('/view-edit', {
+            templateUrl: 'app/view-edit/edit.html'
         });
     }])
 
-    .controller('View5Ctrl', function ($scope, $http) {
+    .controller('EditClassCtrl', function ($scope, $http) {
         getView();
         function getView(){
             $http({
@@ -126,36 +125,36 @@ angular.module('myAppRename.viewAddEditClass', ['ngRoute'])
             }
         };
 
-        $scope.addNewClass = function (){
-            var selectedStudents = [];
-            var selectedTeachers = [];
-            for (var i in $scope.addSelectedStudent){
-                selectedStudents.push($scope.addSelectedStudent[i]._id);
-            }
-            for (var i in $scope.addSelectedTeacher){
-                selectedTeachers.push($scope.addSelectedTeacher[i]._id);
-            }
-            var newClass = {
-                "_id":$scope.addId,
-                "students":selectedStudents,
-                "teachers":selectedTeachers,
-                semester:$scope.addSelectedSemester._id
-            };
-
-            $http
-                .post('adminApi/addClass', newClass)
-                .success(function () {
-                    getView();
-                    $scope.error = null;
-                }).
-                error(function (data, status) {
-                    if (status == 401) {
-                        $scope.error = "You are not authenticated to request these data";
-                        return;
-                    }
-                    $scope.error = data;
-                });
-        };
+        //$scope.addNewClass = function (){
+        //    var selectedStudents = [];
+        //    var selectedTeachers = [];
+        //    for (var i in $scope.addSelectedStudent){
+        //        selectedStudents.push($scope.addSelectedStudent[i]._id);
+        //    }
+        //    for (var i in $scope.addSelectedTeacher){
+        //        selectedTeachers.push($scope.addSelectedTeacher[i]._id);
+        //    }
+        //    var newClass = {
+        //        "_id":$scope.addId,
+        //        "students":selectedStudents,
+        //        "teachers":selectedTeachers,
+        //        semester:$scope.addSelectedSemester._id
+        //    };
+        //
+        //    $http
+        //        .post('adminApi/addClass', newClass)
+        //        .success(function () {
+        //            getView();
+        //            $scope.error = null;
+        //        }).
+        //        error(function (data, status) {
+        //            if (status == 401) {
+        //                $scope.error = "You are not authenticated to request these data";
+        //                return;
+        //            }
+        //            $scope.error = data;
+        //        });
+        //};
         $scope.updateClass = function (){
             var updateClass = {
                 "_id":$scope.editSelectedClass._id,
@@ -182,4 +181,6 @@ angular.module('myAppRename.viewAddEditClass', ['ngRoute'])
 
 
     })
+
+
 ;

@@ -42,14 +42,6 @@ router.post('/updateStudentsDailyPoints', function(req, res){
         res.send(dailyPoints);
     });
 });
-router.post('/updateDailyPoints/', function(req, res) {
-    var studentsId = req.body._id;
-    var dailyPoints = req.body.dailyPoints;
-    mongoInterface.updateDailyPoints(studentsId,dailyPoints, function (err, student) {
-        if(err) res.send(err);
-        res.send(student)
-    });
-});
 router.get('/removeStudentFromClass/:studentid', function(req, res) {
     var studentsId = req.params.studentid;
     mongoInterface.removeStudentFromClass(studentsId, function (err, classe) {
@@ -111,24 +103,6 @@ router.post('/addDailyPoints', function (req, res) {
     mongoInterface.addDailyPoints(req.body, function (err, dailyPoints) {
         if(err) res.send(err);
         res.send(dailyPoints);
-    })
-});
-router.post('/updatePeriod', function (req, res) {
-    mongoInterface.updatePeriod(req.body, function (err, period) {
-        if(err) res.send(err);
-        res.send(period);
-    })
-});
-router.post('/addTaskDetails', function (req, res) {
-    mongoInterface.addTaskDetails(req.body, function (err, taskDetails) {
-        if(err) res.send(err);
-        res.send(taskDetails);
-    })
-});
-router.post('/addTask', function (req, res) {
-    mongoInterface.addTask(req.body, function (err, task) {
-        if(err) res.send(err);
-        res.send(task);
     })
 });
 router.post('/addUser', function (req, res) {

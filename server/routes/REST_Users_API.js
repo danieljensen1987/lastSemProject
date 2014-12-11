@@ -104,15 +104,8 @@ router.post('/changePassword', function(req, res) {
                         console.log(data);
                         res.status(401).send('Invalid Username or Password');
                     }
-
-
                 });
             });
-
-
-
-            //console.log(saltedPass);
-            //test();
         });
     });
 

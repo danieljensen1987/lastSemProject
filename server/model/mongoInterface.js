@@ -35,7 +35,6 @@ function getMyDailyPoints(studentId, callback){
     model.DailyPointsModel.find({student:studentId})
         .exec(function (err, dailyPoints){
             if (err) callback(err);
-            console.log(dailyPoints);
             callback(null,dailyPoints);
         })
 
@@ -82,20 +81,12 @@ function updateStudentsDailyPoints(studentId, period, points, callback){
         })
 
 }
-
-function updateDailyPoints(studentId, points, callback){
-    model.StudentModel.findOneAndUpdate({_id: studentId},{$set:{dailyPoints:points}},{new:true})
-        .exec(function (err, user) {
-            if (err) callback(err);
-            callback(null,user)
-        });
-}
 function removeStudentFromClass(studentId, callback){
-model.ClasseModel.findOneAndUpdate({students:studentId},{$pull:{students:studentId}})
-    .exec(function (err, data) {
-        if(err) callback(err);
-        callback(null,data)
-    })
+    model.ClasseModel.findOneAndUpdate({students:studentId},{$pull:{students:studentId}})
+        .exec(function (err, data) {
+            if(err) callback(err);
+            callback(null,data)
+        })
 }
 
 //what admins can do
@@ -137,25 +128,24 @@ function getTeachers(callback){
 
 function addClass(classe, callback){
     var json = new model.ClasseModel(classe);
-        json.save(function(err,classes){
-            if (err) callback(err);
-             callback(null,classes)
-        });
+    json.save(function(err,classes){
+        if (err) callback(err);
+        callback(null,classes)
+    });
 
 }
 function updateClass(classe, callback){
     model.ClasseModel.findOneAndUpdate({_id:classe._id}, {$set:classe}, {new: true}, function(err, classe) {
         if (err) callback(err);
-        console.log(classe);
         callback(null, classe);
     });
 }
 function addPeriod(period, callback){
     var json = new model.PeriodModel(period);
-        json.save(function(err,periods){
-            if(err) callback(err);
-            callback(null,periods)
-        });
+    json.save(function(err,periods){
+        if(err) callback(err);
+        callback(null,periods)
+    });
 }
 function addDailyPoints(dailyPoints, callback){
     var json = new model.DailyPointsModel(dailyPoints);
@@ -163,27 +153,6 @@ function addDailyPoints(dailyPoints, callback){
         if(err) callback(err);
         callback(null, dailyPoints)
     });
-}
-function updatePeriod(period, callback){
-    model.PeriodModel.findOneAndUpdate({_id:period._id}, {$set:period}, {new: true}, function(err, period) {
-        if (err) callback(err);
-        callback(null, period);
-    });
-}
-function addTaskDetails(taskDetails, callback){
-    var json = new model.TaskDetailModel(taskDetails);
-        json.save(function(err,taskDetails){
-            if(err) callback(err);
-            callback(null,taskDetails)
-        });
-}
-function addTask(task, callback){
-    var json = new model.TaskModel(task);
-        json.save(function(err,task){
-            if(err) callback(err);
-            callback(null,task)
-        });
-
 }
 function addStudent(student, callback){
     var json = new model.StudentModel(student);
@@ -219,15 +188,15 @@ exports.getPeriodsByClassId = getPeriodsByClassId;
 exports.getDailyPointsByPeriod = getDailyPointsByPeriod;
 //exports.getStudentsDailyPoints = getStudentsDailyPoints;
 exports.updateStudentsDailyPoints = updateStudentsDailyPoints;
-exports.updateDailyPoints = updateDailyPoints;
+//exports.updateDailyPoints = updateDailyPoints;
 exports.removeStudentFromClass = removeStudentFromClass;
 
 exports.addClass = addClass;
 exports.updateClass = updateClass;
 exports.addPeriod = addPeriod;
 exports.addDailyPoints = addDailyPoints;
-exports.updatePeriod = updatePeriod;
-exports.addTaskDetails = addTaskDetails;
-exports.addTask = addTask;
+//exports.updatePeriod = updatePeriod;
+//exports.addTaskDetails = addTaskDetails;
+//exports.addTask = addTask;
 exports.addStudent = addStudent;
 exports.addTeacher = addTeacher;

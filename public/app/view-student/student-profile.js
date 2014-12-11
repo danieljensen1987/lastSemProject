@@ -5,10 +5,10 @@ angular.module('myAppRename.viewStudent', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/view-student', {
             templateUrl: 'app/view-student/student-profile.html',
-            controller: 'View2Ctrl'
+            controller: 'ViewStudentCtrl'
         });
     }])
-    .controller('View2Ctrl', ['$scope', '$http', function ($scope, $http) {
+    .controller('ViewStudentCtrl', ['$scope', '$http', function ($scope, $http) {
         //var studentId = $scope.username;
         var studentId = "vincentpena@maroptic.com";
         $http({

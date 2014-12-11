@@ -5,15 +5,17 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/view-teacher', {
             templateUrl: 'app/view-teacher/teacher-classes.html',
-            controller: 'View4Ctrl'
+            controller: 'ViewTeacherCtrl'
         });
     }])
 
-    .controller('View4Ctrl', function ($scope, $http) {
+    .controller('ViewTeacherCtrl', function ($scope, $http) {
         //var teacherId = $scope.username;
-        $scope.days = ['mo','tu','we','th','fr','mo','tu','we','th','fr','mo','tu','we','th','fr','mo','tu','we','th','fr'];
-        $scope.weeks = ['1','2','3','4'];
-        var teacherId = "sybilmcguire@maroptic.com"
+        $scope.days = [
+            'mo','tu','we','th','fr','mo','tu','we','th','fr','mo','tu','we','th','fr',
+            'mo','tu','we','th','fr','mo','tu','we','th','fr','mo','tu','we','th','fr'];
+        $scope.weeks = ['1','2','3','4','5','6'];
+        var teacherId = "sybilmcguire@maroptic.com";
         $http({
             method: 'GET',
             url: 'adminApi/getMyClasses/' + teacherId
@@ -66,47 +68,6 @@ angular.module('myAppRename.viewTeacher', ['ngRoute'])
                     $scope.error = data;
                 });
 
-        };
-
-        $scope.updateDailyPoints = function (student,operator){
-            var newDayliPoints = 0;
-            if (operator == "plus"){
-                newDayliPoints = student.dailyPoints + 1;
-            }
-            if (operator == "minus"){
-                newDayliPoints = student.dailyPoints - 1;
-            }
-
-            var json = {
-                "_id":student._id,
-                "dailyPoints":newDayliPoints
-            };
-
-            $http
-                .post('adminApi/updateDailyPoints', json)
-                .success(function () {
-                    for (var i = 0; i < $scope.classes.length; i++){
-                        var students = $scope.classes[i].students;
-                        for (var j = 0; j < students.length; j++){
-                            if (students[j]._id === student._id){
-                                if (operator === "minus"){
-                                    students[j].dailyPoints -= 1;
-                                } else{
-                                    students[j].dailyPoints += 1;
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    $scope.error = null;
-                }).
-                error(function (data, status) {
-                    if (status == 401) {
-                        $scope.error = "You are not authenticated to request these data";
-                        return;
-                    }
-                    $scope.error = data;
-                });
         };
 
         $scope.studentsTotalPoints = function(points){

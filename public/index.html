@@ -4,7 +4,7 @@
   <meta charset="utf8"/>
   <title>{{title}}</title>
   <link rel="stylesheet" href="/stylesheets/style.css"/>
-  <link rel="stylesheet" href="../vendor/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/stylesheets/css/bootstrap.css">
 </head>
 <body >
 
@@ -27,9 +27,8 @@
           <li><a href="#/view-student" ng-show="isUser">My Profile</a></li>
           <!--<li><a href="#/view-student">Users only (students)</a></li>-->
           <li><a href="#/view-teacher" ng-show="isAdmin">My Classes</a></li>
-          <li><a href="#/view-add-edit-class" ng-show="isAdmin">Add/Edit Class</a></li>
-          <li><a href="#/view-add-edit-period" ng-show="isAdmin">Add/Edit Period</a></li>
-          <li><a href="#/view-add-edit-user" ng-show="isAdmin">Add/Edit User</a></li>
+          <li><a href="#/view-add" ng-show="isAdmin">Add</a></li>
+          <li><a href="#/view-edit" ng-show="isAdmin">Edit</a></li>
           <!--<li><a href="#/view-teacher" >Admins only (teachers)</a></li>-->
         </ul>
 
@@ -73,9 +72,8 @@
 <script src="app/view-all/home.js"></script>
 <script src="app/view-student/student-profile.js"></script>
 <script src="app/view-teacher/teacher-classes.js"></script>
-<script src="app/view-add-edit-class/add-edit-class.js"></script>
-<script src="app/view-add-edit-period/add-edit-period.js"></script>
-<script src="app/view-add-edit-user/add-edit-user.js"></script>
+<script src="app/view-add/add.js"></script>
+<script src="app/view-edit/edit.js"></script>
 <script src="app/components/controllers.js"></script>
 <script src="app/components/directives.js"></script>
 <script src="app/components/factories.js"></script>

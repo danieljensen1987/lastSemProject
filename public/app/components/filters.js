@@ -1,13 +1,6 @@
 'use strict';
 
-/* Filters */
-
 angular.module('myAppRename.filters', [])
-    .filter('checkmark', function () {
-      return function(input) {
-        return input ? '\u2713' : '\u2718';
-      };
-    })
     .filter('unique', function() {
       return function(input, key) {
         var unique = {};
@@ -20,4 +13,5 @@ angular.module('myAppRename.filters', [])
         }
         return uniqueList;
       };
-    });
+    })
+;

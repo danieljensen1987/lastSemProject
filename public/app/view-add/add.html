@@ -1,0 +1,143 @@
+<div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div><br/>
+<!--Add User-->
+<legend ng-click="toggleUser = !toggleUser"><a href="" style="color:#000000;text-decoration: none">Add Student</a>
+        <span class="glyphicon glyphicon-chevron-right" ng-hide="toggleUser"></span>
+        <span class="glyphicon glyphicon-chevron-down" ng-show="toggleUser"></span>
+</legend>
+<div class="col-lg-12" ng-controller="AddUserCtrl" ng-show="toggleUser">
+        <form role="form" name="addForm" class="form-group-sm">
+
+                <div class="col-lg-2">
+                        <label>ID: {{userId}}<br/></label><br/>
+                        <label>Choose Role:</label><br/>
+                        <select class="form-control" ng-model="roleName" ng-options="role for role in roles"></select>
+                </div>
+                <div class="col-lg-12"></div>
+                <div class="col-lg-4">
+                        <label>Enter First Name:</label><br/>
+                        <input class="form-control" type="text" ng-model="fName" placeholder="First Name" required/>
+                        <label>Enter Last Name:</label><br/>
+                        <input class="form-control" type="text" ng-model="lName" placeholder="Enter last name" required/>
+                        <label>Enter Address:</label><br/>
+                        <input class="form-control" type="text" ng-model="address" placeholder="Enter address" required/>
+                        <label>Enter City:</label><br/>
+                        <input class="form-control" type="text" ng-model="city" placeholder="Enter city" required/>
+                </div>
+                <div class="col-lg-4">
+                        <label>Enter Zipcode:</label><br/>
+                        <input class="form-control" type="text"  ng-model="zip" placeholder="Enter zip" required numbers-only="numbers-only"/>
+                        <label>Enter Phone Number:</label><br/>
+                        <input class="form-control" type="text" ng-model="phone" placeholder="Enter phone" required numbers-only="numbers-only"/>
+                        <label>Enter Email:</label><br/>
+                        <input class="form-control" type="email" ng-model="email" placeholder="Enter email" required/><br/>
+                        <button ng-disabled="addForm.$invalid" ng-click="addNewUser()"
+                                class="btn btn-sm btn-success" style="float: right">
+                                Add User
+                        </button>
+                </div>
+
+
+
+
+        </form>
+</div>
+<!--Add Class-->
+<legend ng-click="toggleClass = !toggleClass"><a href="" style="color:#000000;text-decoration: none">Add Class</a>
+        <span class="glyphicon glyphicon-chevron-right" ng-hide="toggleClass"></span>
+        <span class="glyphicon glyphicon-chevron-down" ng-show="toggleClass"></span>
+</legend>
+<div class="col-lg-9" ng-controller="AddClassCtrl" ng-show="toggleClass">
+        <form role="form" name="addForm" class="form-group-sm">
+                <div class="col-lg-4">
+                        <label>Enter Class Name:</label><br/>
+                        <input type="text" class="form-control" ng-model="addId" required placeholder="Class Name"/>
+                        <label>Select a semester:</label><br/>
+                        <select class="form-control" ng-model="addSelectedSemester"
+                                ng-options="semester._id + '. semester' for semester in semesters">
+                        </select>
+                </div>
+                <div class="col-lg-4">
+                        <label>Add Students:</label><br/>
+                        <select class="form-control" ng-model="addSelectedStudent" multiple style="height: 10em"
+                                ng-options="student.fName+ ' ' + student.lName for student in students"></select>
+                        <div class="well well-sm">
+                                <div ng-repeat="student in addSelectedStudent">
+                                        {{student._id}}
+                                </div>
+                        </div>
+                </div>
+                <div class="col-lg-4">
+                        <label>Add Teachers:</label><br/>
+                        <select class="form-control" ng-model="addSelectedTeacher" multiple style="height: 10em"
+                                ng-options="teacher.fName+ ' ' + teacher.lName for teacher in teachers"></select>
+                        <div class="well well-sm">
+                                <div ng-repeat="teacher in addSelectedTeacher">
+                                        {{teacher._id}}
+                                </div>
+                        </div>
+                </div>
+                <div class="col-lg-12">
+                        <button ng-disabled="addForm.$invalid" ng-click="addNewClass()"
+                                class="btn btn-sm btn-success" style="float: right">
+                                add class
+                        </button>
+                </div>
+
+
+        </form>
+</div>
+<!--Add period-->
+<legend ng-click="togglePeriod = !togglePeriod"><a href="" style="color:#000000;text-decoration: none">Add Period</a>
+        <span class="glyphicon glyphicon-chevron-right" ng-hide="togglePeriod"></span>
+        <span class="glyphicon glyphicon-chevron-down" ng-show="togglePeriod"></span>
+</legend>
+<div class="col-lg-12" ng-controller="AddPeriodCtrl" ng-show="togglePeriod">
+        <form role="form" name="addForm" class="form-group-sm">
+                <div class="col-lg-3">
+                        <label>Enter Period Name:</label><br/>
+                        <input class="form-control" type="text" ng-model="newPeriod._id" required placeholder="Period Name"/>
+                        <label>Select Class:</label><br/>
+                        <select class="form-control" ng-model="newPeriod.classes" size="5" style="height: 10.9em" required>
+                                <option ng-repeat="classe in classes | orderBy:classe._id" value="{{classe._id}}">
+                                        {{classe.semester}}.semester - {{classe._id}}
+                                </option>
+                        </select>
+                </div>
+
+                <div class="col-lg-6">
+                        <div class="col-lg-12">
+                                <label>Add Description:</label><br/>
+                                <input class="form-control" type="text" ng-model="newPeriod.description" required placeholder="Description"/>
+                        </div>
+
+                        <div class="col-lg-6">
+                                <label>Add Start Date</label><br/>
+                                <input class="form-control" type="date" ng-model="newPeriod.sDate" required/>
+                        </div>
+                        <div class="col-lg-6">
+                                <label>Add End Date</label><br/>
+                                <input class="form-control" type="date" ng-model="newPeriod.eDate" required/>
+                        </div>
+                        <div class="col-lg-6">
+                                <label>Enter Max Points</label><br/>
+                                <input class="form-control" type="text" ng-model="newPeriod.maxPoints"
+                                       numbers-only="numbers-only" placeholder="Max Points" required/>
+
+                        </div>
+                        <div class="col-lg-6">
+                                <label>Enter Required Points</label><br/>
+                                <input class="form-control" type="text" ng-model="newPeriod.requiredPoints"
+                                       numbers-only="numbers-only" placeholder="Required Points" required/>
+                        </div>
+                        <div class="col-lg-12"><br/></div>
+                        <div class="col-lg-12">
+                                <button ng-disabled="addForm.$invalid" ng-click="addNewPeriod()"
+                                        class="btn btn-sm btn-success" style="float: right">
+                                        Add Period
+                                </button>
+                        </div>
+                </div>
+
+
+        </form>
+</div>
