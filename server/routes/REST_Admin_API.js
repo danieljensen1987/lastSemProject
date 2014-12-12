@@ -36,7 +36,7 @@ router.get('/getDailyPointsByPeriod/:periodid', function(req, res){
 router.post('/updateStudentsDailyPoints', function(req, res){
     var studentId = req.body.studentId;
     var periodId = req.body.periodId;
-    var dailyPoints = req.body.dailyPoints
+    var dailyPoints = req.body.dailyPoints;
     mongoInterface.updateStudentsDailyPoints(studentId, periodId, dailyPoints, function(err, dailyPoints){
         if(err) res.send(err);
         res.send(dailyPoints);

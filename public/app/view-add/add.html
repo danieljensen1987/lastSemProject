@@ -1,35 +1,36 @@
-<div class="alert alert-danger" role="alert" ng-show="error">{{error}}</div><br/>
+<br/>
+<div class="alert-success" ng-controller="AddCtrl">{{succes.message}}</div>
 <!--Add User-->
 <legend ng-click="toggleUser = !toggleUser"><a href="" style="color:#000000;text-decoration: none">Add Student</a>
         <span class="glyphicon glyphicon-chevron-right" ng-hide="toggleUser"></span>
         <span class="glyphicon glyphicon-chevron-down" ng-show="toggleUser"></span>
 </legend>
 <div class="col-lg-12" ng-controller="AddUserCtrl" ng-show="toggleUser">
-        <form role="form" name="addForm" class="form-group-sm">
+        <div class="alert alert-success" role="alert" ng-show="success">{{success}}</div>
 
+        <form role="form" ng-model="addForm" name="addForm" class="form-group-sm">
                 <div class="col-lg-2">
-                        <label>ID: {{userId}}<br/></label><br/>
                         <label>Choose Role:</label><br/>
-                        <select class="form-control" ng-model="roleName" ng-options="role for role in roles"></select>
+                        <select class="form-control" ng-model="newUser.roleName" ng-options="role for role in roles"></select>
                 </div>
                 <div class="col-lg-12"></div>
                 <div class="col-lg-4">
                         <label>Enter First Name:</label><br/>
-                        <input class="form-control" type="text" ng-model="fName" placeholder="First Name" required/>
+                        <input class="form-control" type="text" ng-model="newUser.fName" placeholder="First Name" required/>
                         <label>Enter Last Name:</label><br/>
-                        <input class="form-control" type="text" ng-model="lName" placeholder="Enter last name" required/>
+                        <input class="form-control" type="text" ng-model="newUser.lName" placeholder="Enter last name" required/>
                         <label>Enter Address:</label><br/>
-                        <input class="form-control" type="text" ng-model="address" placeholder="Enter address" required/>
+                        <input class="form-control" type="text" ng-model="newUser.address" placeholder="Enter address" required/>
                         <label>Enter City:</label><br/>
-                        <input class="form-control" type="text" ng-model="city" placeholder="Enter city" required/>
+                        <input class="form-control" type="text" ng-model="newUser.city" placeholder="Enter city" required/>
                 </div>
                 <div class="col-lg-4">
                         <label>Enter Zipcode:</label><br/>
-                        <input class="form-control" type="text"  ng-model="zip" placeholder="Enter zip" required numbers-only="numbers-only"/>
+                        <input class="form-control" type="text"  ng-model="newUser.zip" placeholder="Enter zip" required numbers-only="numbers-only"/>
                         <label>Enter Phone Number:</label><br/>
-                        <input class="form-control" type="text" ng-model="phone" placeholder="Enter phone" required numbers-only="numbers-only"/>
+                        <input class="form-control" type="text" ng-model="newUser.phone" placeholder="Enter phone" required numbers-only="numbers-only"/>
                         <label>Enter Email:</label><br/>
-                        <input class="form-control" type="email" ng-model="email" placeholder="Enter email" required/><br/>
+                        <input class="form-control" type="email" ng-model="newUser.email" placeholder="Enter email" required/><br/>
                         <button ng-disabled="addForm.$invalid" ng-click="addNewUser()"
                                 class="btn btn-sm btn-success" style="float: right">
                                 Add User
@@ -47,6 +48,7 @@
         <span class="glyphicon glyphicon-chevron-down" ng-show="toggleClass"></span>
 </legend>
 <div class="col-lg-9" ng-controller="AddClassCtrl" ng-show="toggleClass">
+        <div class="alert alert-success" role="alert" ng-show="success">{{success}}</div>
         <form role="form" name="addForm" class="form-group-sm">
                 <div class="col-lg-4">
                         <label>Enter Class Name:</label><br/>
@@ -92,6 +94,7 @@
         <span class="glyphicon glyphicon-chevron-down" ng-show="togglePeriod"></span>
 </legend>
 <div class="col-lg-12" ng-controller="AddPeriodCtrl" ng-show="togglePeriod">
+        <div class="alert alert-success" role="alert" ng-show="success">{{success}}</div>
         <form role="form" name="addForm" class="form-group-sm">
                 <div class="col-lg-3">
                         <label>Enter Period Name:</label><br/>
@@ -140,4 +143,6 @@
 
 
         </form>
+</div>
+
 </div>

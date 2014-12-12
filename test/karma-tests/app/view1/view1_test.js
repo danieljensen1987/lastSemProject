@@ -2,7 +2,7 @@
 
 describe('myAppRename.view-all module', function() {
 
-  beforeEach(module('myAppRename.view1'));
+  beforeEach(module('myAppRename.viewAll'));
 
   describe('view-all controller', function(){
 

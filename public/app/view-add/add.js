@@ -8,7 +8,14 @@ angular.module('myAppRename.viewAdd', ['ngRoute'])
         });
     }])
 
-    .controller('AddClassCtrl', function ($scope, $http, $route) {
+    .controller('AddCtrl', function ($scope, $http, $route, SuccessMessage) {
+        $scope.succes = SuccessMessage;
+    })
+
+
+    .controller('AddClassCtrl', function ($scope, $http, $route, SuccessMessage) {
+
+
         getView();
         function getView(){
             $http({
@@ -28,22 +35,22 @@ angular.module('myAppRename.viewAdd', ['ngRoute'])
                     $scope.error = data;
                 });
 
-            $http({
-                method: 'GET',
-                url: 'adminApi/getClasses/'
-            })
-                .success(function (data) {
-                    $scope.classes = data;
-                    $scope.addSelectedClass = $scope.classes[0];
-                    $scope.error = null;
-                }).
-                error(function (data, status) {
-                    if(status == 401){
-                        $scope.error ="You are not authenticated to request these data";
-                        return;
-                    }
-                    $scope.error = data;
-                });
+            //$http({
+            //    method: 'GET',
+            //    url: 'adminApi/getClasses/'
+            //})
+            //    .success(function (data) {
+            //        $scope.classes = data;
+            //        $scope.addSelectedClass = $scope.classes[0];
+            //        $scope.error = null;
+            //    }).
+            //    error(function (data, status) {
+            //        if(status == 401){
+            //            $scope.error ="You are not authenticated to request these data";
+            //            return;
+            //        }
+            //        $scope.error = data;
+            //    });
 
             $http({
                 method: 'GET',
@@ -78,53 +85,6 @@ angular.module('myAppRename.viewAdd', ['ngRoute'])
                 });
         }
 
-        //$scope.addStudentToClass = function (students) {
-        //    for(var i in students){
-        //        var exists = false;
-        //        for(var j in $scope.editSelectedClass.students){
-        //            if($scope.editSelectedClass.students[j] === students[i]._id){
-        //                exists = true;
-        //            }
-        //        }
-        //        if (exists === false){
-        //            $scope.editSelectedClass.students.push(students[i]._id);
-        //        }
-        //    }
-        //
-        //};
-        //$scope.removeStudentFromClass = function (students){
-        //    for(var i in students){
-        //        for(var j in $scope.editSelectedClass.students){
-        //            if($scope.editSelectedClass.students[j] === students[i]){
-        //                $scope.editSelectedClass.students.splice(j,1);
-        //            }
-        //        }
-        //    }
-        //};
-        //$scope.addTeacherToClass = function (teachers) {
-        //    for(var i in teachers){
-        //        var exists = false;
-        //        for(var j in $scope.editSelectedClass.teachers){
-        //            if($scope.editSelectedClass.teachers[j] === teachers[i]._id){
-        //                exists = true;
-        //            }
-        //        }
-        //        if (exists === false){
-        //            $scope.editSelectedClass.teachers.push(teachers[i]._id);
-        //        }
-        //    }
-        //
-        //};
-        //$scope.removeTeacherFromClass = function (teachers){
-        //    for(var i in teachers){
-        //        for(var j in $scope.editSelectedClass.teachers){
-        //            if($scope.editSelectedClass.teachers[j] === teachers[i]){
-        //                $scope.editSelectedClass.teachers.splice(j,1);
-        //            }
-        //        }
-        //    }
-        //};
-
         $scope.addNewClass = function (){
             var selectedStudents = [];
             var selectedTeachers = [];
@@ -144,7 +104,8 @@ angular.module('myAppRename.viewAdd', ['ngRoute'])
             $http
                 .post('adminApi/addClass', newClass)
                 .success(function () {
-                    getView();
+                    $route.reload();
+                    SuccessMessage.message = "New class: " + newClass._id + " added.";
                     $scope.error = null;
                 }).
                 error(function (data, status) {
@@ -157,7 +118,7 @@ angular.module('myAppRename.viewAdd', ['ngRoute'])
         };
     })
 
-    .controller('AddPeriodCtrl', function ($scope, $http, $route) {
+    .controller('AddPeriodCtrl', function ($scope, $http, $route, SuccessMessage) {
 
         getView();
         function getView(){
@@ -215,7 +176,8 @@ angular.module('myAppRename.viewAdd', ['ngRoute'])
             $http
                 .post('adminApi/addPeriod', $scope.newPeriod)
                 .success(function () {
-                    getView();
+                    $route.reload();
+                    SuccessMessage.message = "New period: " + $scope.newPeriod._id + " added.";
                     $scope.error = null;
                 }).
                 error(function (data, status) {
@@ -228,38 +190,37 @@ angular.module('myAppRename.viewAdd', ['ngRoute'])
         };
     })
 
-    .controller('AddUserCtrl', function ($scope, $http, $route) {
+    .controller('AddUserCtrl', function ($scope, $http, $route, SuccessMessage) {
         var randomNumber = 0;
 
         var getRandomNumber = function(){
             randomNumber = Math.floor((Math.random()*899)+100);
         };
         getRandomNumber();
-
+        $scope.newUser = {};
         $scope.roles = ['Admin','Teacher','Student'];
-        $scope.roleName = $scope.roles[0];
+        $scope.newUser.roleName = $scope.roles[0];
 
         $scope.addNewUser = function () {
-            $scope.newUser = {
-                _id: $scope.roleName.toLowerCase().substr(0,[3]) + randomNumber + "-" +
-                $scope.fName.toLowerCase().substr(0,[3]) + $scope.lName.toLowerCase().substr(0,[3]),
-                fName:$scope.fName,
-                lName:$scope.lName,
-                address:$scope.address,
-                city:$scope.city,
-                zip:$scope.zip,
-                phone:$scope.phone,
-                email:$scope.email,
-                role:$scope.roleName.toLowerCase(),
+            var newUser = {
+                _id: $scope.newUser.roleName.toLowerCase().substr(0,[3]) + randomNumber + "-" +
+                $scope.newUser.fName.toLowerCase().substr(0,[3]) + $scope.newUser.lName.toLowerCase().substr(0,[3]),
+                fName:$scope.newUser.fName,
+                lName:$scope.newUser.lName,
+                address:$scope.newUser.address,
+                city:$scope.newUser.city,
+                zip:$scope.newUser.zip,
+                phone:$scope.newUser.phone,
+                email:$scope.newUser.email,
+                role:$scope.newUser.roleName.toLowerCase(),
                 dailyPoints:0
-            }
+            };
 
             $http
-                .post('adminApi/addUser', $scope.newUser)
+                .post('adminApi/addUser', newUser)
                 .success(function () {
-                    $scope.userId = $scope.newUser._id;
-                    $scope.error = null;
                     $route.reload();
+                    SuccessMessage.message = "New " + $scope.newUser.roleName.toLowerCase() + " added with ID: " +  newUser._id;
                 }).
                 error(function (data, status) {
                     if (status == 401) {
@@ -269,22 +230,5 @@ angular.module('myAppRename.viewAdd', ['ngRoute'])
                     $scope.error = data;
                 });
         };
-
-
-
-
-        //$scope.output =
-        //    //$scope.newUser.role.roleName.toLowerCase().substr(0,[3]) +
-        //    //'-' +
-        //    //$scope.newUser.fName.toLowerCase().substr(0,[3]) +
-        //    $scope.newUser.lName.substr(0,[3]) +
-        //    //$scope.newUser ? ($scope.newUser.lName ?  $scope.newUser.lName : '') : '' +
-        //    "testing";
-
-
-
-
-
-
     })
 ;
